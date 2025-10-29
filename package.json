@@ -1,0 +1,22 @@
+{
+  "name": "fractal-ecoprint",
+  "version": "1.0.0",
+  "description": "High-quality fractal generator with multiple formulas and color palettes",
+  "main": "src/server/server.js",
+  "scripts": {
+    "start": "node src/server/server.js",
+    "dev": "node src/server/server.js"
+  },
+  "keywords": [
+    "fractal",
+    "mandelbrot",
+    "julia",
+    "generator",
+    "canvas"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

@@ -1,0 +1,68 @@
+/* Palette Preview Gradients */
+
+.sunset-preview {
+    background: linear-gradient(90deg, 
+        #1a1a2e 0%,
+        #16213e 20%,
+        #0f3460 40%,
+        #533483 60%,
+        #e94560 80%,
+        #ff6b6b 100%
+    );
+}
+
+.ocean-preview {
+    background: linear-gradient(90deg, 
+        #000428 0%,
+        #004e92 20%,
+        #1e3c72 40%,
+        #2a5298 60%,
+        #74ebd5 80%,
+        #ACB6E5 100%
+    );
+}
+
+.forest-preview {
+    background: linear-gradient(90deg, 
+        #0a3d0c 0%,
+        #1e5f1f 20%,
+        #2d8630 40%,
+        #5cb85c 60%,
+        #8bc34a 80%,
+        #cddc39 100%
+    );
+}
+
+.fire-preview {
+    background: linear-gradient(90deg, 
+        #000000 0%,
+        #3d0000 20%,
+        #8b0000 40%,
+        #ff4500 60%,
+        #ffa500 80%,
+        #ffff00 100%
+    );
+}
+
+.rainbow-preview {
+    background: linear-gradient(90deg, 
+        #ff0000 0%,
+        #ff7f00 16.67%,
+        #ffff00 33.33%,
+        #00ff00 50%,
+        #0000ff 66.67%,
+        #4b0082 83.33%,
+        #9400d3 100%
+    );
+}
+
+.grayscale-preview {
+    background: linear-gradient(90deg, 
+        #000000 0%,
+        #1a1a1a 20%,
+        #4d4d4d 40%,
+        #808080 60%,
+        #b3b3b3 80%,
+        #ffffff 100%
+    );
+}
