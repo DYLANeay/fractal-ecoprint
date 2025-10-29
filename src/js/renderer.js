@@ -19,6 +19,12 @@ export class FractalRenderer {
         // Fractal settings
         this.fractalType = 'mandelbrot';
         this.juliaC = { real: -0.7, imag: 0.27015 };
+        
+        // Fractal parameters
+        this.mandelbrotParams = { power: 2, bailout: 2 };
+        this.burningShipParams = { power: 2, rotation: 0 };
+        this.tricornParams = { power: 2, bailout: 2 };
+        this.newtonParams = { degree: 3, relaxation: 1.0 };
     }
 
     setView(centerX, centerY, range) {
@@ -39,6 +45,22 @@ export class FractalRenderer {
         this.juliaC = { real, imag };
     }
 
+    setMandelbrotParams(power, bailout) {
+        this.mandelbrotParams = { power, bailout };
+    }
+
+    setBurningShipParams(power, rotation) {
+        this.burningShipParams = { power, rotation };
+    }
+
+    setTricornParams(power, bailout) {
+        this.tricornParams = { power, bailout };
+    }
+
+    setNewtonParams(degree, relaxation) {
+        this.newtonParams = { degree, relaxation };
+    }
+
     // Map pixel coordinates to complex plane
     pixelToComplex(px, py, width, height) {
         const aspectRatio = width / height;
@@ -50,15 +72,31 @@ export class FractalRenderer {
     calculatePoint(cx, cy) {
         switch (this.fractalType) {
             case 'mandelbrot':
-                return calculateMandelbrot(cx, cy, this.maxIterations);
+                return calculateMandelbrot(
+                    cx, cy, this.maxIterations,
+                    this.mandelbrotParams.power,
+                    this.mandelbrotParams.bailout
+                );
             case 'julia':
                 return calculateJulia(cx, cy, this.juliaC.real, this.juliaC.imag, this.maxIterations);
             case 'burning-ship':
-                return calculateBurningShip(cx, cy, this.maxIterations);
+                return calculateBurningShip(
+                    cx, cy, this.maxIterations,
+                    this.burningShipParams.power,
+                    this.burningShipParams.rotation
+                );
             case 'tricorn':
-                return calculateTricorn(cx, cy, this.maxIterations);
+                return calculateTricorn(
+                    cx, cy, this.maxIterations,
+                    this.tricornParams.power,
+                    this.tricornParams.bailout
+                );
             case 'newton':
-                return calculateNewton(cx, cy, this.maxIterations);
+                return calculateNewton(
+                    cx, cy, this.maxIterations,
+                    this.newtonParams.degree,
+                    this.newtonParams.relaxation
+                );
             default:
                 return calculateMandelbrot(cx, cy, this.maxIterations);
         }

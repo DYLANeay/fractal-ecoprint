@@ -51,9 +51,24 @@ class FractalApp {
             this.renderer.setFractalType(e.target.value);
             this.updateDefaultView(e.target.value);
             
-            // Show/hide Julia parameters
-            const juliaParams = document.getElementById('julia-params');
-            juliaParams.style.display = e.target.value === 'julia' ? 'block' : 'none';
+            // Show/hide fractal-specific parameters
+            document.getElementById('julia-params').style.display = 'none';
+            document.getElementById('mandelbrot-params').style.display = 'none';
+            document.getElementById('burning-ship-params').style.display = 'none';
+            document.getElementById('tricorn-params').style.display = 'none';
+            document.getElementById('newton-params').style.display = 'none';
+            
+            if (e.target.value === 'julia') {
+                document.getElementById('julia-params').style.display = 'block';
+            } else if (e.target.value === 'mandelbrot') {
+                document.getElementById('mandelbrot-params').style.display = 'block';
+            } else if (e.target.value === 'burning-ship') {
+                document.getElementById('burning-ship-params').style.display = 'block';
+            } else if (e.target.value === 'tricorn') {
+                document.getElementById('tricorn-params').style.display = 'block';
+            } else if (e.target.value === 'newton') {
+                document.getElementById('newton-params').style.display = 'block';
+            }
             
             this.renderFractal();
         });
@@ -66,6 +81,74 @@ class FractalApp {
 
         document.getElementById('julia-imag').addEventListener('change', (e) => {
             this.renderer.setJuliaC(this.renderer.juliaC.real, parseFloat(e.target.value));
+            this.renderFractal();
+        });
+
+        // Mandelbrot parameters
+        document.getElementById('mandelbrot-power').addEventListener('change', (e) => {
+            this.renderer.setMandelbrotParams(
+                parseInt(e.target.value),
+                this.renderer.mandelbrotParams.bailout
+            );
+            this.renderFractal();
+        });
+
+        document.getElementById('mandelbrot-bailout').addEventListener('change', (e) => {
+            this.renderer.setMandelbrotParams(
+                this.renderer.mandelbrotParams.power,
+                parseFloat(e.target.value)
+            );
+            this.renderFractal();
+        });
+
+        // Burning Ship parameters
+        document.getElementById('burning-ship-power').addEventListener('change', (e) => {
+            this.renderer.setBurningShipParams(
+                parseInt(e.target.value),
+                this.renderer.burningShipParams.rotation
+            );
+            this.renderFractal();
+        });
+
+        document.getElementById('burning-ship-rotation').addEventListener('change', (e) => {
+            this.renderer.setBurningShipParams(
+                this.renderer.burningShipParams.power,
+                parseFloat(e.target.value)
+            );
+            this.renderFractal();
+        });
+
+        // Tricorn parameters
+        document.getElementById('tricorn-power').addEventListener('change', (e) => {
+            this.renderer.setTricornParams(
+                parseInt(e.target.value),
+                this.renderer.tricornParams.bailout
+            );
+            this.renderFractal();
+        });
+
+        document.getElementById('tricorn-bailout').addEventListener('change', (e) => {
+            this.renderer.setTricornParams(
+                this.renderer.tricornParams.power,
+                parseFloat(e.target.value)
+            );
+            this.renderFractal();
+        });
+
+        // Newton parameters
+        document.getElementById('newton-degree').addEventListener('change', (e) => {
+            this.renderer.setNewtonParams(
+                parseInt(e.target.value),
+                this.renderer.newtonParams.relaxation
+            );
+            this.renderFractal();
+        });
+
+        document.getElementById('newton-relaxation').addEventListener('change', (e) => {
+            this.renderer.setNewtonParams(
+                this.renderer.newtonParams.degree,
+                parseFloat(e.target.value)
+            );
             this.renderFractal();
         });
 

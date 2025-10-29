@@ -1,20 +1,28 @@
-// Newton Fractal: z(n+1) = z(n) - f(z)/f'(z)
-// Using f(z) = z^3 - 1
+// Newton Fractal: z(n+1) = z(n) - relaxation * f(z)/f'(z)
+// Using f(z) = z^degree - 1
 
-export function calculateNewton(zx, zy, maxIterations) {
+export function calculateNewton(zx, zy, maxIterations, degree = 3, relaxation = 1.0) {
     let iteration = 0;
     const tolerance = 0.0001;
 
     while (iteration < maxIterations) {
-        // f(z) = z^3 - 1
-        const zx2 = zx * zx;
-        const zy2 = zy * zy;
-        const zx3 = zx * (zx2 - 3 * zy2);
-        const zy3 = zy * (3 * zx2 - zy2);
-
-        // f'(z) = 3z^2
-        const dx = 3 * (zx2 - zy2);
-        const dy = 6 * zx * zy;
+        // f(z) = z^degree - 1
+        // f'(z) = degree * z^(degree-1)
+        
+        const r = Math.sqrt(zx * zx + zy * zy);
+        const theta = Math.atan2(zy, zx);
+        
+        // Calculate z^degree
+        const rDegree = Math.pow(r, degree);
+        const thetaDegree = theta * degree;
+        const fx = rDegree * Math.cos(thetaDegree) - zx;
+        const fy = rDegree * Math.sin(thetaDegree) - zy;
+        
+        // Calculate degree * z^(degree-1)
+        const rDerivative = degree * Math.pow(r, degree - 1);
+        const thetaDerivative = theta * (degree - 1);
+        const dx = rDerivative * Math.cos(thetaDerivative);
+        const dy = rDerivative * Math.sin(thetaDerivative);
 
         // Avoid division by zero
         const denominator = dx * dx + dy * dy;
@@ -22,12 +30,9 @@ export function calculateNewton(zx, zy, maxIterations) {
             return { iteration, smoothValue: 0 };
         }
 
-        // Newton iteration: z = z - f(z)/f'(z)
-        const fx = zx3 - zx;
-        const fy = zy3 - zy;
-
-        const newZx = zx - (fx * dx + fy * dy) / denominator;
-        const newZy = zy - (fy * dx - fx * dy) / denominator;
+        // Newton iteration with relaxation: z = z - relaxation * f(z)/f'(z)
+        const newZx = zx - relaxation * (fx * dx + fy * dy) / denominator;
+        const newZy = zy - relaxation * (fy * dx - fx * dy) / denominator;
 
         // Check convergence
         const diffx = newZx - zx;

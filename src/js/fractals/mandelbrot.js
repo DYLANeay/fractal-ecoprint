@@ -1,25 +1,37 @@
-// Mandelbrot Set: z(n+1) = z(n)^2 + c
+// Mandelbrot Set: z(n+1) = z(n)^power + c
 
-export function calculateMandelbrot(cx, cy, maxIterations) {
+export function calculateMandelbrot(cx, cy, maxIterations, power = 2, bailout = 2) {
     let zx = 0;
     let zy = 0;
     let iteration = 0;
+    const bailoutSquared = bailout * bailout;
 
     while (iteration < maxIterations) {
         const zx2 = zx * zx;
         const zy2 = zy * zy;
+        const magnitude = zx2 + zy2;
 
-        // Check if point has escaped (|z| > 2)
-        if (zx2 + zy2 > 4) {
+        // Check if point has escaped
+        if (magnitude > bailoutSquared) {
             // Calculate smooth coloring value
-            const smoothValue = Math.log2(Math.log2(zx2 + zy2));
+            const smoothValue = Math.log2(Math.log2(magnitude) / Math.log2(bailout));
             return { iteration, smoothValue };
         }
 
-        // z = z^2 + c
-        const xtemp = zx2 - zy2 + cx;
-        zy = 2 * zx * zy + cy;
-        zx = xtemp;
+        if (power === 2) {
+            // Standard Mandelbrot: z = z^2 + c
+            const xtemp = zx2 - zy2 + cx;
+            zy = 2 * zx * zy + cy;
+            zx = xtemp;
+        } else {
+            // Generalized: z = z^power + c
+            const r = Math.sqrt(magnitude);
+            const theta = Math.atan2(zy, zx);
+            const newR = Math.pow(r, power);
+            const newTheta = theta * power;
+            zx = newR * Math.cos(newTheta) + cx;
+            zy = newR * Math.sin(newTheta) + cy;
+        }
 
         iteration++;
     }
