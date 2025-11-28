@@ -276,3 +276,160 @@
     #fde725 100%
   );
 }
+
+/* Premium Palette Previews for Yearbook Cover */
+.golden-preview {
+  background: linear-gradient(
+    90deg,
+    #0a0500 0%,
+    #281400 20%,
+    #643c0a 40%,
+    #b4821e 60%,
+    #ffc832 70%,
+    #fff096 85%,
+    #ffffdc 100%
+  );
+}
+
+.silver-preview {
+  background: linear-gradient(
+    90deg,
+    #00000a 0%,
+    #1e232d 20%,
+    #50555f 40%,
+    #8c919b 60%,
+    #c8cdd7 80%,
+    #f0f2f5 90%,
+    #ffffff 100%
+  );
+}
+
+.royal-preview {
+  background: linear-gradient(
+    90deg,
+    #0a001e 0%,
+    #280a50 20%,
+    #502896 40%,
+    #9664c8 60%,
+    #c896ff 70%,
+    #ffc864 85%,
+    #ffffc8 100%
+  );
+}
+
+.emerald-preview {
+  background: linear-gradient(
+    90deg,
+    #000a05 0%,
+    #002814 20%,
+    #0a643c 40%,
+    #1ea064 60%,
+    #50dc96 70%,
+    #96ffc8 85%,
+    #dcfff0 100%
+  );
+}
+
+.ruby-preview {
+  background: linear-gradient(
+    90deg,
+    #140005 0%,
+    #500014 20%,
+    #960a28 40%,
+    #dc1e3c 60%,
+    #ff5064 70%,
+    #ff9696 85%,
+    #ffdcdc 100%
+  );
+}
+
+.sapphire-preview {
+  background: linear-gradient(
+    90deg,
+    #000514 0%,
+    #0a1e50 20%,
+    #143c96 40%,
+    #2864dc 60%,
+    #64a0ff 70%,
+    #b4dcff 85%,
+    #e6f5ff 100%
+  );
+}
+
+.sunset-glow-preview {
+  background: linear-gradient(
+    90deg,
+    #050014 0%,
+    #320a3c 20%,
+    #781450 40%,
+    #c83246 60%,
+    #ff7850 70%,
+    #ffb464 85%,
+    #ffe696 100%
+  );
+}
+
+.northern-lights-preview {
+  background: linear-gradient(
+    90deg,
+    #000a1e 0%,
+    #0a3c64 20%,
+    #288c78 40%,
+    #50c8a0 60%,
+    #8cb4ff 70%,
+    #b478ff 85%,
+    #ff8cc8 100%
+  );
+}
+
+.magma-preview {
+  background: linear-gradient(
+    90deg,
+    #000004 0%,
+    #280b54 20%,
+    #65156e 40%,
+    #9f2a63 60%,
+    #d44842 70%,
+    #f57d15 85%,
+    #fcfdbf 100%
+  );
+}
+
+.ocean-depth-preview {
+  background: linear-gradient(
+    90deg,
+    #000000 0%,
+    #001428 20%,
+    #003c64 40%,
+    #14648c 60%,
+    #3ca0b4 70%,
+    #78dcf0 85%,
+    #c8faff 100%
+  );
+}
+
+.cosmic-preview {
+  background: linear-gradient(
+    90deg,
+    #000005 0%,
+    #140528 20%,
+    #3c1464 40%,
+    #8c28b4 60%,
+    #c850f0 70%,
+    #ff8cc8 85%,
+    #ffdcff 100%
+  );
+}
+
+.professional-preview {
+  background: linear-gradient(
+    90deg,
+    #0a0f14 0%,
+    #1e3246 20%,
+    #3c5a78 40%,
+    #648cb4 60%,
+    #96bedc 70%,
+    #c8dcf0 85%,
+    #f0f5fa 100%
+  );
+}

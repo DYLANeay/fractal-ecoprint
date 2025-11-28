@@ -3,18 +3,24 @@ import { calculateJulia } from './fractals/julia.js';
 import { calculateBurningShip } from './fractals/burning-ship.js';
 import { calculateTricorn } from './fractals/tricorn.js';
 import { calculateNewton } from './fractals/newton.js';
+import { VisualEffects } from './effects.js';
 
 export class FractalRenderer {
   constructor(canvas, colorPalette) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d', { willReadFrequently: true });
     this.colorPalette = colorPalette;
+    this.effects = new VisualEffects();
 
     // Default view
     this.centerX = -0.5;
     this.centerY = 0;
     this.range = 3.5;
-    this.maxIterations = 100;
+    this.maxIterations = 256;
+
+    // Quality settings
+    this.antialiasing = true;
+    this.supersampleLevel = 2;
 
     // Fractal settings
     this.fractalType = 'mandelbrot';
@@ -132,14 +138,36 @@ export class FractalRenderer {
 
     for (let py = 0; py < height; py++) {
       for (let px = 0; px < width; px++) {
-        const { x: cx, y: cy } = this.pixelToComplex(px, py, width, height);
-        const { iteration, smoothValue } = this.calculatePoint(cx, cy);
+        let color;
 
-        const color = this.colorPalette.getSmoothColor(
-          iteration,
-          this.maxIterations,
-          smoothValue
-        );
+        if (this.antialiasing && this.supersampleLevel > 1) {
+          // Supersampling for anti-aliasing
+          color = VisualEffects.supersample(
+            (x, y) => {
+              const { x: cx, y: cy } = this.pixelToComplex(x, y, width, height);
+              const { iteration, smoothValue } = this.calculatePoint(cx, cy);
+              return this.colorPalette.getSmoothColor(
+                iteration,
+                this.maxIterations,
+                smoothValue
+              );
+            },
+            px,
+            py,
+            width,
+            height,
+            this.supersampleLevel
+          );
+        } else {
+          // Regular rendering
+          const { x: cx, y: cy } = this.pixelToComplex(px, py, width, height);
+          const { iteration, smoothValue } = this.calculatePoint(cx, cy);
+          color = this.colorPalette.getSmoothColor(
+            iteration,
+            this.maxIterations,
+            smoothValue
+          );
+        }
 
         const index = (py * width + px) * 4;
         data[index] = color.r;
@@ -153,6 +181,9 @@ export class FractalRenderer {
         progressCallback((py / height) * 100);
       }
     }
+
+    // Apply post-processing effects
+    this.effects.applyEffects(imageData, width, height);
 
     this.ctx.putImageData(imageData, 0, 0);
 

@@ -10,12 +10,16 @@ import { newtonConfig } from './fractals/newton.js';
 class FractalApp {
   constructor() {
     this.canvas = document.getElementById('fractal-canvas');
-    this.colorPalette = new ColorPalette('rainbow');
+    this.colorPalette = new ColorPalette('royal');
     this.renderer = new FractalRenderer(this.canvas, this.colorPalette);
     this.exporter = new FractalExporter(this.renderer);
 
     // Set initial canvas size
     this.resizeCanvas();
+
+    // Initialize effects with default values
+    this.renderer.effects.setVignette(true, 0.4);
+    this.renderer.effects.setColorEnhancement(1.2, 1.3, 1.1);
 
     // Initialize UI
     this.initializeUI();
@@ -220,6 +224,70 @@ class FractalApp {
     const qualityValue = document.getElementById('quality-value');
     qualitySlider.addEventListener('input', (e) => {
       qualityValue.textContent = Math.round(e.target.value * 100) + '%';
+    });
+
+    // Visual effects controls
+    document.getElementById('enable-glow').addEventListener('change', (e) => {
+      this.renderer.effects.setGlow(e.target.checked);
+      this.renderFractal();
+    });
+
+    const glowIntensitySlider = document.getElementById('glow-intensity');
+    const glowIntensityValue = document.getElementById('glow-intensity-value');
+    glowIntensitySlider.addEventListener('input', (e) => {
+      const value = parseFloat(e.target.value);
+      glowIntensityValue.textContent = value.toFixed(2);
+      this.renderer.effects.setGlow(
+        document.getElementById('enable-glow').checked,
+        value
+      );
+      this.renderFractal();
+    });
+
+    document.getElementById('enable-vignette').addEventListener('change', (e) => {
+      this.renderer.effects.setVignette(e.target.checked);
+      this.renderFractal();
+    });
+
+    const vignetteStrengthSlider = document.getElementById('vignette-strength');
+    const vignetteStrengthValue = document.getElementById('vignette-strength-value');
+    vignetteStrengthSlider.addEventListener('input', (e) => {
+      const value = parseFloat(e.target.value);
+      vignetteStrengthValue.textContent = value.toFixed(2);
+      this.renderer.effects.setVignette(
+        document.getElementById('enable-vignette').checked,
+        value
+      );
+      this.renderFractal();
+    });
+
+    document.getElementById('enable-grain').addEventListener('change', (e) => {
+      this.renderer.effects.setGrain(e.target.checked);
+      this.renderFractal();
+    });
+
+    const vibranceSlider = document.getElementById('color-vibrance');
+    const vibranceValue = document.getElementById('color-vibrance-value');
+    vibranceSlider.addEventListener('input', (e) => {
+      const value = parseFloat(e.target.value);
+      vibranceValue.textContent = value.toFixed(1);
+      this.renderer.effects.setColorEnhancement(
+        value,
+        parseFloat(document.getElementById('color-saturation').value)
+      );
+      this.renderFractal();
+    });
+
+    const saturationSlider = document.getElementById('color-saturation');
+    const saturationValue = document.getElementById('color-saturation-value');
+    saturationSlider.addEventListener('input', (e) => {
+      const value = parseFloat(e.target.value);
+      saturationValue.textContent = value.toFixed(1);
+      this.renderer.effects.setColorEnhancement(
+        parseFloat(document.getElementById('color-vibrance').value),
+        value
+      );
+      this.renderFractal();
     });
 
     // Render button
