@@ -16,8 +16,17 @@ export class VisualEffects {
     };
   }
 
-  applyEffects(imageData, width, height) {
+  applyEffects(imageData, width, height, preserveAlpha = false) {
     let data = new Uint8ClampedArray(imageData.data);
+
+    // Store original alpha values if we need to preserve them
+    let originalAlpha = null;
+    if (preserveAlpha) {
+      originalAlpha = new Uint8Array(width * height);
+      for (let i = 0; i < width * height; i++) {
+        originalAlpha[i] = imageData.data[i * 4 + 3];
+      }
+    }
 
     // Apply effects in order
     if (this.settings.vibrance > 1.0 || this.settings.saturation !== 1.0) {
@@ -39,6 +48,13 @@ export class VisualEffects {
     // Copy back to imageData
     for (let i = 0; i < imageData.data.length; i++) {
       imageData.data[i] = data[i];
+    }
+
+    // Restore original alpha values if preserved
+    if (preserveAlpha && originalAlpha) {
+      for (let i = 0; i < originalAlpha.length; i++) {
+        imageData.data[i * 4 + 3] = originalAlpha[i];
+      }
     }
 
     return imageData;
@@ -145,18 +161,9 @@ export class VisualEffects {
         const blurB = b / count;
 
         // Blend original with glow
-        result[idx] = Math.min(
-          255,
-          data[idx] + blurR * intensity
-        );
-        result[idx + 1] = Math.min(
-          255,
-          data[idx + 1] + blurG * intensity
-        );
-        result[idx + 2] = Math.min(
-          255,
-          data[idx + 2] + blurB * intensity
-        );
+        result[idx] = Math.min(255, data[idx] + blurR * intensity);
+        result[idx + 1] = Math.min(255, data[idx + 1] + blurG * intensity);
+        result[idx + 2] = Math.min(255, data[idx + 2] + blurB * intensity);
       }
     }
 
@@ -204,14 +211,7 @@ export class VisualEffects {
   }
 
   // Supersampling anti-aliasing
-  static supersample(
-    calculatePixelColor,
-    x,
-    y,
-    width,
-    height,
-    samples = 2
-  ) {
+  static supersample(calculatePixelColor, x, y, width, height, samples = 2) {
     let r = 0,
       g = 0,
       b = 0;

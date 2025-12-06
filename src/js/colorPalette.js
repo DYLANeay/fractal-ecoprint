@@ -298,13 +298,38 @@ export const palettes = {
 };
 
 export class ColorPalette {
-  constructor(paletteName = 'rainbow') {
+  constructor(paletteName = "rainbow") {
     this.setPalette(paletteName);
+    // Custom colors for fractal set (interior) and background
+    this.fractalColor = { r: 0, g: 0, b: 0 }; // Default black for set interior
+    this.backgroundColor = null; // null means use palette colors for background
+    this.useCustomFractalColor = false;
+    this.useCustomBackgroundColor = false;
   }
 
   setPalette(paletteName) {
     this.palette = palettes[paletteName] || palettes.rainbow;
     this.paletteName = paletteName;
+  }
+
+  setFractalColor(r, g, b) {
+    this.fractalColor = { r, g, b };
+    this.useCustomFractalColor = true;
+  }
+
+  setBackgroundColor(r, g, b) {
+    this.backgroundColor = { r, g, b };
+    this.useCustomBackgroundColor = true;
+  }
+
+  clearCustomFractalColor() {
+    this.useCustomFractalColor = false;
+    this.fractalColor = { r: 0, g: 0, b: 0 };
+  }
+
+  clearCustomBackgroundColor() {
+    this.useCustomBackgroundColor = false;
+    this.backgroundColor = null;
   }
 
   // Linear interpolation between two colors
@@ -335,7 +360,23 @@ export class ColorPalette {
   // Get color with smooth coloring for fractals
   getSmoothColor(iterations, maxIterations, smoothValue = 0) {
     if (iterations >= maxIterations) {
-      return { r: 0, g: 0, b: 0 }; // Inside the set - black
+      // Inside the set - use custom fractal color or default black
+      if (this.useCustomFractalColor) {
+        return { ...this.fractalColor };
+      }
+      return { r: 0, g: 0, b: 0 };
+    }
+
+    // Outside the set (background/escape region)
+    if (this.useCustomBackgroundColor && this.backgroundColor) {
+      // Blend custom background color with intensity based on iteration count
+      const normalized = (iterations + 1 - smoothValue) / maxIterations;
+      const intensity = Math.sin(normalized * Math.PI);
+      return {
+        r: Math.round(this.backgroundColor.r * (0.3 + 0.7 * intensity)),
+        g: Math.round(this.backgroundColor.g * (0.3 + 0.7 * intensity)),
+        b: Math.round(this.backgroundColor.b * (0.3 + 0.7 * intensity)),
+      };
     }
 
     // Smooth coloring using the smooth value

@@ -1,488 +1,642 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fractal Generator</title>
-    <link rel="stylesheet" href="css/styles.css" />
-    <link rel="stylesheet" href="css/palettes.css" />
-  </head>
-  <body>
-    <div class="container">
-      <header>
-        <h1>Fractal Generator</h1>
-      </header>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Fractal Generator</title>
+        <link rel="stylesheet" href="css/styles.css" />
+        <link rel="stylesheet" href="css/palettes.css" />
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <h1>Fractal Generator</h1>
+            </header>
 
-      <div class="main-content">
-        <aside class="controls">
-          <section class="control-group">
-            <h2>Fractal Formula</h2>
-            <select id="fractal-select">
-              <option value="mandelbrot">Mandelbrot Set</option>
-              <option value="julia">Julia Set</option>
-              <option value="burning-ship">Burning Ship</option>
-              <option value="tricorn">Tricorn (Mandelbar)</option>
-              <option value="newton">Newton Fractal</option>
-            </select>
-          </section>
+            <div class="main-content">
+                <aside class="controls">
+                    <section class="control-group">
+                        <h2>Fractal Formula</h2>
+                        <select id="fractal-select">
+                            <option value="mandelbrot">Mandelbrot Set</option>
+                            <option value="julia">Julia Set</option>
+                            <option value="burning-ship">Burning Ship</option>
+                            <option value="tricorn">Tricorn (Mandelbar)</option>
+                            <option value="newton">Newton Fractal</option>
+                        </select>
+                    </section>
 
-          <section
-            class="control-group"
-            id="julia-params"
-            style="display: none"
-          >
-            <h3>Julia Parameters</h3>
-            <label>
-              Real (c):
-              <input
-                type="number"
-                id="julia-real"
-                value="-0.7"
-                step="0.01"
-                min="-2"
-                max="2"
-              />
-            </label>
-            <label>
-              Imaginary (c):
-              <input
-                type="number"
-                id="julia-imag"
-                value="0.27015"
-                step="0.01"
-                min="-2"
-                max="2"
-              />
-            </label>
-          </section>
+                    <section
+                        class="control-group"
+                        id="julia-params"
+                        style="display: none"
+                    >
+                        <h3>Julia Parameters</h3>
+                        <label>
+                            Real (c):
+                            <input
+                                type="number"
+                                id="julia-real"
+                                value="-0.7"
+                                step="0.01"
+                                min="-2"
+                                max="2"
+                            />
+                        </label>
+                        <label>
+                            Imaginary (c):
+                            <input
+                                type="number"
+                                id="julia-imag"
+                                value="0.27015"
+                                step="0.01"
+                                min="-2"
+                                max="2"
+                            />
+                        </label>
+                    </section>
 
-          <section
-            class="control-group"
-            id="mandelbrot-params"
-            style="display: none"
-          >
-            <h3>Mandelbrot Parameters</h3>
-            <label>
-              Power:
-              <input
-                type="number"
-                id="mandelbrot-power"
-                value="2"
-                step="1"
-                min="2"
-                max="8"
-              />
-            </label>
-            <label>
-              Bailout Radius:
-              <input
-                type="number"
-                id="mandelbrot-bailout"
-                value="2"
-                step="0.5"
-                min="2"
-                max="10"
-              />
-            </label>
-          </section>
+                    <section
+                        class="control-group"
+                        id="mandelbrot-params"
+                        style="display: none"
+                    >
+                        <h3>Mandelbrot Parameters</h3>
+                        <label>
+                            Power:
+                            <input
+                                type="number"
+                                id="mandelbrot-power"
+                                value="2"
+                                step="1"
+                                min="2"
+                                max="8"
+                            />
+                        </label>
+                        <label>
+                            Bailout Radius:
+                            <input
+                                type="number"
+                                id="mandelbrot-bailout"
+                                value="2"
+                                step="0.5"
+                                min="2"
+                                max="10"
+                            />
+                        </label>
+                    </section>
 
-          <section
-            class="control-group"
-            id="burning-ship-params"
-            style="display: none"
-          >
-            <h3>Burning Ship Parameters</h3>
-            <label>
-              Power:
-              <input
-                type="number"
-                id="burning-ship-power"
-                value="2"
-                step="1"
-                min="2"
-                max="8"
-              />
-            </label>
-            <label>
-              Rotation (degrees):
-              <input
-                type="number"
-                id="burning-ship-rotation"
-                value="0"
-                step="15"
-                min="0"
-                max="360"
-              />
-            </label>
-          </section>
+                    <section
+                        class="control-group"
+                        id="burning-ship-params"
+                        style="display: none"
+                    >
+                        <h3>Burning Ship Parameters</h3>
+                        <label>
+                            Power:
+                            <input
+                                type="number"
+                                id="burning-ship-power"
+                                value="2"
+                                step="1"
+                                min="2"
+                                max="8"
+                            />
+                        </label>
+                        <label>
+                            Rotation (degrees):
+                            <input
+                                type="number"
+                                id="burning-ship-rotation"
+                                value="0"
+                                step="15"
+                                min="0"
+                                max="360"
+                            />
+                        </label>
+                    </section>
 
-          <section
-            class="control-group"
-            id="tricorn-params"
-            style="display: none"
-          >
-            <h3>Tricorn Parameters</h3>
-            <label>
-              Power:
-              <input
-                type="number"
-                id="tricorn-power"
-                value="2"
-                step="1"
-                min="2"
-                max="8"
-              />
-            </label>
-            <label>
-              Bailout Radius:
-              <input
-                type="number"
-                id="tricorn-bailout"
-                value="2"
-                step="0.5"
-                min="2"
-                max="10"
-              />
-            </label>
-          </section>
+                    <section
+                        class="control-group"
+                        id="tricorn-params"
+                        style="display: none"
+                    >
+                        <h3>Tricorn Parameters</h3>
+                        <label>
+                            Power:
+                            <input
+                                type="number"
+                                id="tricorn-power"
+                                value="2"
+                                step="1"
+                                min="2"
+                                max="8"
+                            />
+                        </label>
+                        <label>
+                            Bailout Radius:
+                            <input
+                                type="number"
+                                id="tricorn-bailout"
+                                value="2"
+                                step="0.5"
+                                min="2"
+                                max="10"
+                            />
+                        </label>
+                    </section>
 
-          <section
-            class="control-group"
-            id="newton-params"
-            style="display: none"
-          >
-            <h3>Newton Parameters</h3>
-            <label>
-              Polynomial Degree:
-              <input
-                type="number"
-                id="newton-degree"
-                value="3"
-                step="1"
-                min="2"
-                max="8"
-              />
-            </label>
-            <label>
-              Relaxation Factor:
-              <input
-                type="number"
-                id="newton-relaxation"
-                value="1.0"
-                step="0.1"
-                min="0.5"
-                max="2.0"
-              />
-            </label>
-          </section>
+                    <section
+                        class="control-group"
+                        id="newton-params"
+                        style="display: none"
+                    >
+                        <h3>Newton Parameters</h3>
+                        <label>
+                            Polynomial Degree:
+                            <input
+                                type="number"
+                                id="newton-degree"
+                                value="3"
+                                step="1"
+                                min="2"
+                                max="8"
+                            />
+                        </label>
+                        <label>
+                            Relaxation Factor:
+                            <input
+                                type="number"
+                                id="newton-relaxation"
+                                value="1.0"
+                                step="0.1"
+                                min="0.5"
+                                max="2.0"
+                            />
+                        </label>
+                    </section>
 
-          <section class="control-group">
-            <h2>Rendering Settings</h2>
-            <label>
-              Max Iterations:
-              <input
-                type="number"
-                id="max-iterations"
-                value="256"
-                min="50"
-                max="2000"
-                step="50"
-              />
-            </label>
-            <label>
-              Zoom Level:
-              <input
-                type="number"
-                id="zoom-level"
-                value="1"
-                min="0.1"
-                max="1000"
-                step="0.1"
-              />
-            </label>
-            <button id="reset-view" class="btn btn-secondary">
-              Reset View
-            </button>
-          </section>
+                    <section class="control-group">
+                        <h2>Rendering Settings</h2>
+                        <label>
+                            Max Iterations:
+                            <input
+                                type="number"
+                                id="max-iterations"
+                                value="256"
+                                min="50"
+                                max="2000"
+                                step="50"
+                            />
+                        </label>
+                        <label>
+                            Zoom Level:
+                            <input
+                                type="number"
+                                id="zoom-level"
+                                value="1"
+                                min="0.1"
+                                max="1000"
+                                step="0.1"
+                            />
+                        </label>
+                        <button id="reset-view" class="btn btn-secondary">
+                            Reset View
+                        </button>
+                    </section>
 
-          <section class="control-group">
-            <h2>Color Palette</h2>
-            <div class="palette-grid">
-              <div class="palette-option" data-palette="rainbow">
-                <div class="palette-preview rainbow-preview"></div>
-                <span>Rainbow</span>
-              </div>
-              <div class="palette-option" data-palette="sunset">
-                <div class="palette-preview sunset-preview"></div>
-                <span>Sunset</span>
-              </div>
-              <div class="palette-option" data-palette="ocean">
-                <div class="palette-preview ocean-preview"></div>
-                <span>Ocean</span>
-              </div>
-              <div class="palette-option" data-palette="forest">
-                <div class="palette-preview forest-preview"></div>
-                <span>Forest</span>
-              </div>
-              <div class="palette-option" data-palette="fire">
-                <div class="palette-preview fire-preview"></div>
-                <span>Fire</span>
-              </div>
-              <div class="palette-option" data-palette="grayscale">
-                <div class="palette-preview grayscale-preview"></div>
-                <span>Grayscale</span>
-              </div>
-              <div class="palette-option" data-palette="aurora">
-                <div class="palette-preview aurora-preview"></div>
-                <span>Aurora</span>
-              </div>
-              <div class="palette-option" data-palette="neon">
-                <div class="palette-preview neon-preview"></div>
-                <span>Neon</span>
-              </div>
-              <div class="palette-option" data-palette="vintage">
-                <div class="palette-preview vintage-preview"></div>
-                <span>Vintage</span>
-              </div>
-              <div class="palette-option" data-palette="cyberpunk">
-                <div class="palette-preview cyberpunk-preview"></div>
-                <span>Cyberpunk</span>
-              </div>
-              <div class="palette-option" data-palette="lava">
-                <div class="palette-preview lava-preview"></div>
-                <span>Lava</span>
-              </div>
-              <div class="palette-option" data-palette="ice">
-                <div class="palette-preview ice-preview"></div>
-                <span>Ice</span>
-              </div>
-              <div class="palette-option" data-palette="toxic">
-                <div class="palette-preview toxic-preview"></div>
-                <span>Toxic</span>
-              </div>
-              <div class="palette-option" data-palette="sakura">
-                <div class="palette-preview sakura-preview"></div>
-                <span>Sakura</span>
-              </div>
-              <div class="palette-option" data-palette="deepspace">
-                <div class="palette-preview deepspace-preview"></div>
-                <span>Deep Space</span>
-              </div>
-              <div class="palette-option" data-palette="copper">
-                <div class="palette-preview copper-preview"></div>
-                <span>Copper</span>
-              </div>
-              <div class="palette-option" data-palette="tropical">
-                <div class="palette-preview tropical-preview"></div>
-                <span>Tropical</span>
-              </div>
-              <div class="palette-option" data-palette="midnight">
-                <div class="palette-preview midnight-preview"></div>
-                <span>Midnight</span>
-              </div>
-              <div class="palette-option" data-palette="desert">
-                <div class="palette-preview desert-preview"></div>
-                <span>Desert</span>
-              </div>
-              <div class="palette-option" data-palette="candy">
-                <div class="palette-preview candy-preview"></div>
-                <span>Candy</span>
-              </div>
-              <div class="palette-option" data-palette="earth">
-                <div class="palette-preview earth-preview"></div>
-                <span>Earth</span>
-              </div>
-              <div class="palette-option" data-palette="plasma">
-                <div class="palette-preview plasma-preview"></div>
-                <span>Plasma</span>
-              </div>
-              <div class="palette-option" data-palette="viridis">
-                <div class="palette-preview viridis-preview"></div>
-                <span>Viridis</span>
-              </div>
-              <div class="palette-option" data-palette="golden">
-                <div class="palette-preview golden-preview"></div>
-                <span>Golden</span>
-              </div>
-              <div class="palette-option" data-palette="silver">
-                <div class="palette-preview silver-preview"></div>
-                <span>Silver</span>
-              </div>
-              <div class="palette-option active" data-palette="royal">
-                <div class="palette-preview royal-preview"></div>
-                <span>Royal</span>
-              </div>
-              <div class="palette-option" data-palette="emerald">
-                <div class="palette-preview emerald-preview"></div>
-                <span>Emerald</span>
-              </div>
-              <div class="palette-option" data-palette="ruby">
-                <div class="palette-preview ruby-preview"></div>
-                <span>Ruby</span>
-              </div>
-              <div class="palette-option" data-palette="sapphire">
-                <div class="palette-preview sapphire-preview"></div>
-                <span>Sapphire</span>
-              </div>
-              <div class="palette-option" data-palette="sunset_glow">
-                <div class="palette-preview sunset-glow-preview"></div>
-                <span>Sunset Glow</span>
-              </div>
-              <div class="palette-option" data-palette="northern_lights">
-                <div class="palette-preview northern-lights-preview"></div>
-                <span>Aurora</span>
-              </div>
-              <div class="palette-option" data-palette="magma">
-                <div class="palette-preview magma-preview"></div>
-                <span>Magma</span>
-              </div>
-              <div class="palette-option" data-palette="ocean_depth">
-                <div class="palette-preview ocean-depth-preview"></div>
-                <span>Ocean Depth</span>
-              </div>
-              <div class="palette-option" data-palette="cosmic">
-                <div class="palette-preview cosmic-preview"></div>
-                <span>Cosmic</span>
-              </div>
-              <div class="palette-option" data-palette="professional">
-                <div class="palette-preview professional-preview"></div>
-                <span>Professional</span>
-              </div>
+                    <section class="control-group">
+                        <h2>Custom Colors</h2>
+                        <label>
+                            <input
+                                type="checkbox"
+                                id="use-custom-fractal-color"
+                            />
+                            Custom Fractal Color
+                        </label>
+                        <div
+                            id="fractal-color-picker"
+                            style="display: none; margin-left: 20px"
+                        >
+                            <input
+                                type="color"
+                                id="fractal-color"
+                                value="#000000"
+                            />
+                            <span>Fractal interior color</span>
+                        </div>
+                        <label>
+                            <input
+                                type="checkbox"
+                                id="use-custom-background-color"
+                            />
+                            Custom Background Color
+                        </label>
+                        <div
+                            id="background-color-picker"
+                            style="display: none; margin-left: 20px"
+                        >
+                            <input
+                                type="color"
+                                id="background-color"
+                                value="#4a90d9"
+                            />
+                            <span>Background/escape color</span>
+                        </div>
+                    </section>
+
+                    <section class="control-group">
+                        <h2>Color Palette</h2>
+                        <div class="palette-grid">
+                            <div class="palette-option" data-palette="rainbow">
+                                <div
+                                    class="palette-preview rainbow-preview"
+                                ></div>
+                                <span>Rainbow</span>
+                            </div>
+                            <div class="palette-option" data-palette="sunset">
+                                <div
+                                    class="palette-preview sunset-preview"
+                                ></div>
+                                <span>Sunset</span>
+                            </div>
+                            <div class="palette-option" data-palette="ocean">
+                                <div
+                                    class="palette-preview ocean-preview"
+                                ></div>
+                                <span>Ocean</span>
+                            </div>
+                            <div class="palette-option" data-palette="forest">
+                                <div
+                                    class="palette-preview forest-preview"
+                                ></div>
+                                <span>Forest</span>
+                            </div>
+                            <div class="palette-option" data-palette="fire">
+                                <div class="palette-preview fire-preview"></div>
+                                <span>Fire</span>
+                            </div>
+                            <div
+                                class="palette-option"
+                                data-palette="grayscale"
+                            >
+                                <div
+                                    class="palette-preview grayscale-preview"
+                                ></div>
+                                <span>Grayscale</span>
+                            </div>
+                            <div class="palette-option" data-palette="aurora">
+                                <div
+                                    class="palette-preview aurora-preview"
+                                ></div>
+                                <span>Aurora</span>
+                            </div>
+                            <div class="palette-option" data-palette="neon">
+                                <div class="palette-preview neon-preview"></div>
+                                <span>Neon</span>
+                            </div>
+                            <div class="palette-option" data-palette="vintage">
+                                <div
+                                    class="palette-preview vintage-preview"
+                                ></div>
+                                <span>Vintage</span>
+                            </div>
+                            <div
+                                class="palette-option"
+                                data-palette="cyberpunk"
+                            >
+                                <div
+                                    class="palette-preview cyberpunk-preview"
+                                ></div>
+                                <span>Cyberpunk</span>
+                            </div>
+                            <div class="palette-option" data-palette="lava">
+                                <div class="palette-preview lava-preview"></div>
+                                <span>Lava</span>
+                            </div>
+                            <div class="palette-option" data-palette="ice">
+                                <div class="palette-preview ice-preview"></div>
+                                <span>Ice</span>
+                            </div>
+                            <div class="palette-option" data-palette="toxic">
+                                <div
+                                    class="palette-preview toxic-preview"
+                                ></div>
+                                <span>Toxic</span>
+                            </div>
+                            <div class="palette-option" data-palette="sakura">
+                                <div
+                                    class="palette-preview sakura-preview"
+                                ></div>
+                                <span>Sakura</span>
+                            </div>
+                            <div
+                                class="palette-option"
+                                data-palette="deepspace"
+                            >
+                                <div
+                                    class="palette-preview deepspace-preview"
+                                ></div>
+                                <span>Deep Space</span>
+                            </div>
+                            <div class="palette-option" data-palette="copper">
+                                <div
+                                    class="palette-preview copper-preview"
+                                ></div>
+                                <span>Copper</span>
+                            </div>
+                            <div class="palette-option" data-palette="tropical">
+                                <div
+                                    class="palette-preview tropical-preview"
+                                ></div>
+                                <span>Tropical</span>
+                            </div>
+                            <div class="palette-option" data-palette="midnight">
+                                <div
+                                    class="palette-preview midnight-preview"
+                                ></div>
+                                <span>Midnight</span>
+                            </div>
+                            <div class="palette-option" data-palette="desert">
+                                <div
+                                    class="palette-preview desert-preview"
+                                ></div>
+                                <span>Desert</span>
+                            </div>
+                            <div class="palette-option" data-palette="candy">
+                                <div
+                                    class="palette-preview candy-preview"
+                                ></div>
+                                <span>Candy</span>
+                            </div>
+                            <div class="palette-option" data-palette="earth">
+                                <div
+                                    class="palette-preview earth-preview"
+                                ></div>
+                                <span>Earth</span>
+                            </div>
+                            <div class="palette-option" data-palette="plasma">
+                                <div
+                                    class="palette-preview plasma-preview"
+                                ></div>
+                                <span>Plasma</span>
+                            </div>
+                            <div class="palette-option" data-palette="viridis">
+                                <div
+                                    class="palette-preview viridis-preview"
+                                ></div>
+                                <span>Viridis</span>
+                            </div>
+                            <div class="palette-option" data-palette="golden">
+                                <div
+                                    class="palette-preview golden-preview"
+                                ></div>
+                                <span>Golden</span>
+                            </div>
+                            <div class="palette-option" data-palette="silver">
+                                <div
+                                    class="palette-preview silver-preview"
+                                ></div>
+                                <span>Silver</span>
+                            </div>
+                            <div
+                                class="palette-option active"
+                                data-palette="royal"
+                            >
+                                <div
+                                    class="palette-preview royal-preview"
+                                ></div>
+                                <span>Royal</span>
+                            </div>
+                            <div class="palette-option" data-palette="emerald">
+                                <div
+                                    class="palette-preview emerald-preview"
+                                ></div>
+                                <span>Emerald</span>
+                            </div>
+                            <div class="palette-option" data-palette="ruby">
+                                <div class="palette-preview ruby-preview"></div>
+                                <span>Ruby</span>
+                            </div>
+                            <div class="palette-option" data-palette="sapphire">
+                                <div
+                                    class="palette-preview sapphire-preview"
+                                ></div>
+                                <span>Sapphire</span>
+                            </div>
+                            <div
+                                class="palette-option"
+                                data-palette="sunset_glow"
+                            >
+                                <div
+                                    class="palette-preview sunset-glow-preview"
+                                ></div>
+                                <span>Sunset Glow</span>
+                            </div>
+                            <div
+                                class="palette-option"
+                                data-palette="northern_lights"
+                            >
+                                <div
+                                    class="palette-preview northern-lights-preview"
+                                ></div>
+                                <span>Aurora</span>
+                            </div>
+                            <div class="palette-option" data-palette="magma">
+                                <div
+                                    class="palette-preview magma-preview"
+                                ></div>
+                                <span>Magma</span>
+                            </div>
+                            <div
+                                class="palette-option"
+                                data-palette="ocean_depth"
+                            >
+                                <div
+                                    class="palette-preview ocean-depth-preview"
+                                ></div>
+                                <span>Ocean Depth</span>
+                            </div>
+                            <div class="palette-option" data-palette="cosmic">
+                                <div
+                                    class="palette-preview cosmic-preview"
+                                ></div>
+                                <span>Cosmic</span>
+                            </div>
+                            <div
+                                class="palette-option"
+                                data-palette="professional"
+                            >
+                                <div
+                                    class="palette-preview professional-preview"
+                                ></div>
+                                <span>Professional</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="control-group">
+                        <h2>Visual Effects</h2>
+                        <label>
+                            <input type="checkbox" id="enable-glow" />
+                            Enable Glow Effect
+                        </label>
+                        <label>
+                            Glow Intensity:
+                            <input
+                                type="range"
+                                id="glow-intensity"
+                                min="0"
+                                max="1"
+                                step="0.05"
+                                value="0.3"
+                            />
+                            <span id="glow-intensity-value">0.30</span>
+                        </label>
+                        <label>
+                            <input
+                                type="checkbox"
+                                id="enable-vignette"
+                                checked
+                            />
+                            Enable Vignette
+                        </label>
+                        <label>
+                            Vignette Strength:
+                            <input
+                                type="range"
+                                id="vignette-strength"
+                                min="0"
+                                max="1"
+                                step="0.05"
+                                value="0.4"
+                            />
+                            <span id="vignette-strength-value">0.40</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="enable-grain" />
+                            Enable Film Grain
+                        </label>
+                        <label>
+                            Color Vibrance:
+                            <input
+                                type="range"
+                                id="color-vibrance"
+                                min="1.0"
+                                max="2.0"
+                                step="0.1"
+                                value="1.2"
+                            />
+                            <span id="color-vibrance-value">1.2</span>
+                        </label>
+                        <label>
+                            Saturation:
+                            <input
+                                type="range"
+                                id="color-saturation"
+                                min="0.5"
+                                max="2.0"
+                                step="0.1"
+                                value="1.3"
+                            />
+                            <span id="color-saturation-value">1.3</span>
+                        </label>
+                    </section>
+
+                    <section class="control-group">
+                        <h2>Export</h2>
+                        <label>
+                            Export Format:
+                            <select id="export-format">
+                                <option value="jpeg">JPEG</option>
+                                <option value="png">PNG</option>
+                            </select>
+                        </label>
+                        <label>
+                            Export Size:
+                            <select id="export-size">
+                                <option value="1920x1080">
+                                    Full HD (1920×1080)
+                                </option>
+                                <option value="2560x1440">
+                                    2K (2560×1440)
+                                </option>
+                                <option value="3840x2160" selected>
+                                    4K (3840×2160)
+                                </option>
+                                <option value="7680x4320">
+                                    8K (7680×4320)
+                                </option>
+                                <option value="custom">Custom</option>
+                            </select>
+                        </label>
+                        <div id="custom-size" style="display: none">
+                            <label>
+                                Width:
+                                <input
+                                    type="number"
+                                    id="custom-width"
+                                    value="1920"
+                                    min="100"
+                                    max="7680"
+                                />
+                            </label>
+                            <label>
+                                Height:
+                                <input
+                                    type="number"
+                                    id="custom-height"
+                                    value="1080"
+                                    min="100"
+                                    max="4320"
+                                />
+                            </label>
+                        </div>
+                        <div id="jpeg-options">
+                            <label>
+                                JPEG Quality:
+                                <input
+                                    type="range"
+                                    id="jpeg-quality"
+                                    min="0.5"
+                                    max="1.0"
+                                    step="0.05"
+                                    value="0.95"
+                                />
+                                <span id="quality-value">95%</span>
+                            </label>
+                        </div>
+                        <div id="png-options" style="display: none">
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    id="transparent-background"
+                                />
+                                Transparent Background (removes fractal set)
+                            </label>
+                        </div>
+                        <button id="export-btn" class="btn btn-primary">
+                            Export Fractal
+                        </button>
+                    </section>
+
+                    <section class="control-group">
+                        <button id="render-btn" class="btn btn-primary">
+                            Render Fractal
+                        </button>
+                    </section>
+                </aside>
+
+                <main class="canvas-container">
+                    <canvas id="fractal-canvas"></canvas>
+                    <div id="loading" style="display: none">Rendering...</div>
+                    <div class="info-overlay">
+                        <p>Click and drag to pan • Scroll to zoom</p>
+                    </div>
+                </main>
             </div>
-          </section>
+        </div>
 
-          <section class="control-group">
-            <h2>Visual Effects</h2>
-            <label>
-              <input type="checkbox" id="enable-glow" />
-              Enable Glow Effect
-            </label>
-            <label>
-              Glow Intensity:
-              <input
-                type="range"
-                id="glow-intensity"
-                min="0"
-                max="1"
-                step="0.05"
-                value="0.3"
-              />
-              <span id="glow-intensity-value">0.30</span>
-            </label>
-            <label>
-              <input type="checkbox" id="enable-vignette" checked />
-              Enable Vignette
-            </label>
-            <label>
-              Vignette Strength:
-              <input
-                type="range"
-                id="vignette-strength"
-                min="0"
-                max="1"
-                step="0.05"
-                value="0.4"
-              />
-              <span id="vignette-strength-value">0.40</span>
-            </label>
-            <label>
-              <input type="checkbox" id="enable-grain" />
-              Enable Film Grain
-            </label>
-            <label>
-              Color Vibrance:
-              <input
-                type="range"
-                id="color-vibrance"
-                min="1.0"
-                max="2.0"
-                step="0.1"
-                value="1.2"
-              />
-              <span id="color-vibrance-value">1.2</span>
-            </label>
-            <label>
-              Saturation:
-              <input
-                type="range"
-                id="color-saturation"
-                min="0.5"
-                max="2.0"
-                step="0.1"
-                value="1.3"
-              />
-              <span id="color-saturation-value">1.3</span>
-            </label>
-          </section>
-
-          <section class="control-group">
-            <h2>Export</h2>
-            <label>
-              Export Size:
-              <select id="export-size">
-                <option value="1920x1080">Full HD (1920×1080)</option>
-                <option value="2560x1440">2K (2560×1440)</option>
-                <option value="3840x2160" selected>4K (3840×2160)</option>
-                <option value="7680x4320">8K (7680×4320)</option>
-                <option value="custom">Custom</option>
-              </select>
-            </label>
-            <div id="custom-size" style="display: none">
-              <label>
-                Width:
-                <input
-                  type="number"
-                  id="custom-width"
-                  value="1920"
-                  min="100"
-                  max="7680"
-                />
-              </label>
-              <label>
-                Height:
-                <input
-                  type="number"
-                  id="custom-height"
-                  value="1080"
-                  min="100"
-                  max="4320"
-                />
-              </label>
-            </div>
-            <label>
-              JPEG Quality:
-              <input
-                type="range"
-                id="jpeg-quality"
-                min="0.5"
-                max="1.0"
-                step="0.05"
-                value="0.95"
-              />
-              <span id="quality-value">95%</span>
-            </label>
-            <button id="export-btn" class="btn btn-primary">
-              Export as JPEG
-            </button>
-          </section>
-
-          <section class="control-group">
-            <button id="render-btn" class="btn btn-primary">
-              Render Fractal
-            </button>
-          </section>
-        </aside>
-
-        <main class="canvas-container">
-          <canvas id="fractal-canvas"></canvas>
-          <div id="loading" style="display: none">Rendering...</div>
-          <div class="info-overlay">
-            <p>Click and drag to pan • Scroll to zoom</p>
-          </div>
-        </main>
-      </div>
-    </div>
-
-    <script type="module" src="js/app.js"></script>
-  </body>
+        <script type="module" src="js/app.js"></script>
+    </body>
 </html>

@@ -1,16 +1,16 @@
-import { ColorPalette } from './colorPalette.js';
-import { FractalRenderer } from './renderer.js';
-import { FractalExporter } from './exporter.js';
-import { mandelbrotConfig } from './fractals/mandelbrot.js';
-import { juliaConfig } from './fractals/julia.js';
-import { burningShipConfig } from './fractals/burning-ship.js';
-import { tricornConfig } from './fractals/tricorn.js';
-import { newtonConfig } from './fractals/newton.js';
+import { ColorPalette } from "./colorPalette.js";
+import { FractalRenderer } from "./renderer.js";
+import { FractalExporter } from "./exporter.js";
+import { mandelbrotConfig } from "./fractals/mandelbrot.js";
+import { juliaConfig } from "./fractals/julia.js";
+import { burningShipConfig } from "./fractals/burning-ship.js";
+import { tricornConfig } from "./fractals/tricorn.js";
+import { newtonConfig } from "./fractals/newton.js";
 
 class FractalApp {
   constructor() {
-    this.canvas = document.getElementById('fractal-canvas');
-    this.colorPalette = new ColorPalette('royal');
+    this.canvas = document.getElementById("fractal-canvas");
+    this.colorPalette = new ColorPalette("royal");
     this.renderer = new FractalRenderer(this.canvas, this.colorPalette);
     this.exporter = new FractalExporter(this.renderer);
 
@@ -45,167 +45,217 @@ class FractalApp {
 
     this.canvas.width = width;
     this.canvas.height = height;
-    this.canvas.style.width = width + 'px';
-    this.canvas.style.height = height + 'px';
+    this.canvas.style.width = width + "px";
+    this.canvas.style.height = height + "px";
   }
 
   initializeUI() {
     // Fractal selector
     document
-      .getElementById('fractal-select')
-      .addEventListener('change', (e) => {
+      .getElementById("fractal-select")
+      .addEventListener("change", (e) => {
         this.renderer.setFractalType(e.target.value);
         this.updateDefaultView(e.target.value);
 
         // Show/hide fractal-specific parameters
-        document.getElementById('julia-params').style.display = 'none';
-        document.getElementById('mandelbrot-params').style.display = 'none';
-        document.getElementById('burning-ship-params').style.display = 'none';
-        document.getElementById('tricorn-params').style.display = 'none';
-        document.getElementById('newton-params').style.display = 'none';
+        document.getElementById("julia-params").style.display = "none";
+        document.getElementById("mandelbrot-params").style.display = "none";
+        document.getElementById("burning-ship-params").style.display = "none";
+        document.getElementById("tricorn-params").style.display = "none";
+        document.getElementById("newton-params").style.display = "none";
 
-        if (e.target.value === 'julia') {
-          document.getElementById('julia-params').style.display = 'block';
-        } else if (e.target.value === 'mandelbrot') {
-          document.getElementById('mandelbrot-params').style.display = 'block';
-        } else if (e.target.value === 'burning-ship') {
-          document.getElementById('burning-ship-params').style.display =
-            'block';
-        } else if (e.target.value === 'tricorn') {
-          document.getElementById('tricorn-params').style.display = 'block';
-        } else if (e.target.value === 'newton') {
-          document.getElementById('newton-params').style.display = 'block';
+        if (e.target.value === "julia") {
+          document.getElementById("julia-params").style.display = "block";
+        } else if (e.target.value === "mandelbrot") {
+          document.getElementById("mandelbrot-params").style.display = "block";
+        } else if (e.target.value === "burning-ship") {
+          document.getElementById("burning-ship-params").style.display =
+            "block";
+        } else if (e.target.value === "tricorn") {
+          document.getElementById("tricorn-params").style.display = "block";
+        } else if (e.target.value === "newton") {
+          document.getElementById("newton-params").style.display = "block";
         }
 
         this.renderFractal();
       });
 
     // Julia parameters
-    document.getElementById('julia-real').addEventListener('change', (e) => {
+    document.getElementById("julia-real").addEventListener("change", (e) => {
       this.renderer.setJuliaC(
         parseFloat(e.target.value),
-        this.renderer.juliaC.imag
+        this.renderer.juliaC.imag,
       );
       this.renderFractal();
     });
 
-    document.getElementById('julia-imag').addEventListener('change', (e) => {
+    document.getElementById("julia-imag").addEventListener("change", (e) => {
       this.renderer.setJuliaC(
         this.renderer.juliaC.real,
-        parseFloat(e.target.value)
+        parseFloat(e.target.value),
       );
       this.renderFractal();
     });
 
     // Mandelbrot parameters
     document
-      .getElementById('mandelbrot-power')
-      .addEventListener('change', (e) => {
+      .getElementById("mandelbrot-power")
+      .addEventListener("change", (e) => {
         this.renderer.setMandelbrotParams(
           parseInt(e.target.value),
-          this.renderer.mandelbrotParams.bailout
+          this.renderer.mandelbrotParams.bailout,
         );
         this.renderFractal();
       });
 
     document
-      .getElementById('mandelbrot-bailout')
-      .addEventListener('change', (e) => {
+      .getElementById("mandelbrot-bailout")
+      .addEventListener("change", (e) => {
         this.renderer.setMandelbrotParams(
           this.renderer.mandelbrotParams.power,
-          parseFloat(e.target.value)
+          parseFloat(e.target.value),
         );
         this.renderFractal();
       });
 
     // Burning Ship parameters
     document
-      .getElementById('burning-ship-power')
-      .addEventListener('change', (e) => {
+      .getElementById("burning-ship-power")
+      .addEventListener("change", (e) => {
         this.renderer.setBurningShipParams(
           parseInt(e.target.value),
-          this.renderer.burningShipParams.rotation
+          this.renderer.burningShipParams.rotation,
         );
         this.renderFractal();
       });
 
     document
-      .getElementById('burning-ship-rotation')
-      .addEventListener('change', (e) => {
+      .getElementById("burning-ship-rotation")
+      .addEventListener("change", (e) => {
         this.renderer.setBurningShipParams(
           this.renderer.burningShipParams.power,
-          parseFloat(e.target.value)
+          parseFloat(e.target.value),
         );
         this.renderFractal();
       });
 
     // Tricorn parameters
-    document.getElementById('tricorn-power').addEventListener('change', (e) => {
+    document.getElementById("tricorn-power").addEventListener("change", (e) => {
       this.renderer.setTricornParams(
         parseInt(e.target.value),
-        this.renderer.tricornParams.bailout
+        this.renderer.tricornParams.bailout,
       );
       this.renderFractal();
     });
 
     document
-      .getElementById('tricorn-bailout')
-      .addEventListener('change', (e) => {
+      .getElementById("tricorn-bailout")
+      .addEventListener("change", (e) => {
         this.renderer.setTricornParams(
           this.renderer.tricornParams.power,
-          parseFloat(e.target.value)
+          parseFloat(e.target.value),
         );
         this.renderFractal();
       });
 
     // Newton parameters
-    document.getElementById('newton-degree').addEventListener('change', (e) => {
+    document.getElementById("newton-degree").addEventListener("change", (e) => {
       this.renderer.setNewtonParams(
         parseInt(e.target.value),
-        this.renderer.newtonParams.relaxation
+        this.renderer.newtonParams.relaxation,
       );
       this.renderFractal();
     });
 
     document
-      .getElementById('newton-relaxation')
-      .addEventListener('change', (e) => {
+      .getElementById("newton-relaxation")
+      .addEventListener("change", (e) => {
         this.renderer.setNewtonParams(
           this.renderer.newtonParams.degree,
-          parseFloat(e.target.value)
+          parseFloat(e.target.value),
         );
         this.renderFractal();
       });
 
     // Max iterations
     document
-      .getElementById('max-iterations')
-      .addEventListener('change', (e) => {
+      .getElementById("max-iterations")
+      .addEventListener("change", (e) => {
         this.renderer.setMaxIterations(parseInt(e.target.value));
         this.renderFractal();
       });
 
     // Zoom level
-    document.getElementById('zoom-level').addEventListener('change', (e) => {
+    document.getElementById("zoom-level").addEventListener("change", (e) => {
       const zoom = parseFloat(e.target.value);
       this.renderer.range = 3.5 / zoom;
       this.renderFractal();
     });
 
     // Reset view
-    document.getElementById('reset-view').addEventListener('click', () => {
+    document.getElementById("reset-view").addEventListener("click", () => {
       this.updateDefaultView(this.renderer.fractalType);
-      document.getElementById('zoom-level').value = 1;
+      document.getElementById("zoom-level").value = 1;
       this.renderFractal();
     });
 
+    // Custom fractal color
+    document
+      .getElementById("use-custom-fractal-color")
+      .addEventListener("change", (e) => {
+        const picker = document.getElementById("fractal-color-picker");
+        picker.style.display = e.target.checked ? "block" : "none";
+        if (e.target.checked) {
+          const colorHex = document.getElementById("fractal-color").value;
+          const rgb = this.hexToRgb(colorHex);
+          this.colorPalette.setFractalColor(rgb.r, rgb.g, rgb.b);
+        } else {
+          this.colorPalette.clearCustomFractalColor();
+        }
+        this.renderFractal();
+      });
+
+    document.getElementById("fractal-color").addEventListener("input", (e) => {
+      if (document.getElementById("use-custom-fractal-color").checked) {
+        const rgb = this.hexToRgb(e.target.value);
+        this.colorPalette.setFractalColor(rgb.r, rgb.g, rgb.b);
+        this.renderFractal();
+      }
+    });
+
+    // Custom background color
+    document
+      .getElementById("use-custom-background-color")
+      .addEventListener("change", (e) => {
+        const picker = document.getElementById("background-color-picker");
+        picker.style.display = e.target.checked ? "block" : "none";
+        if (e.target.checked) {
+          const colorHex = document.getElementById("background-color").value;
+          const rgb = this.hexToRgb(colorHex);
+          this.colorPalette.setBackgroundColor(rgb.r, rgb.g, rgb.b);
+        } else {
+          this.colorPalette.clearCustomBackgroundColor();
+        }
+        this.renderFractal();
+      });
+
+    document
+      .getElementById("background-color")
+      .addEventListener("input", (e) => {
+        if (document.getElementById("use-custom-background-color").checked) {
+          const rgb = this.hexToRgb(e.target.value);
+          this.colorPalette.setBackgroundColor(rgb.r, rgb.g, rgb.b);
+          this.renderFractal();
+        }
+      });
+
     // Color palettes
-    document.querySelectorAll('.palette-option').forEach((option) => {
-      option.addEventListener('click', (e) => {
+    document.querySelectorAll(".palette-option").forEach((option) => {
+      option.addEventListener("click", (e) => {
         document
-          .querySelectorAll('.palette-option')
-          .forEach((opt) => opt.classList.remove('active'));
-        option.classList.add('active');
+          .querySelectorAll(".palette-option")
+          .forEach((opt) => opt.classList.remove("active"));
+        option.classList.add("active");
 
         const paletteName = option.dataset.palette;
         this.colorPalette.setPalette(paletteName);
@@ -213,90 +263,108 @@ class FractalApp {
       });
     });
 
+    // Export format selector
+    document.getElementById("export-format").addEventListener("change", (e) => {
+      const jpegOptions = document.getElementById("jpeg-options");
+      const pngOptions = document.getElementById("png-options");
+
+      if (e.target.value === "png") {
+        jpegOptions.style.display = "none";
+        pngOptions.style.display = "block";
+      } else {
+        jpegOptions.style.display = "block";
+        pngOptions.style.display = "none";
+      }
+    });
+
     // Export size selector
-    document.getElementById('export-size').addEventListener('change', (e) => {
-      const customSize = document.getElementById('custom-size');
-      customSize.style.display = e.target.value === 'custom' ? 'block' : 'none';
+    document.getElementById("export-size").addEventListener("change", (e) => {
+      const customSize = document.getElementById("custom-size");
+      customSize.style.display = e.target.value === "custom" ? "block" : "none";
     });
 
     // JPEG quality slider
-    const qualitySlider = document.getElementById('jpeg-quality');
-    const qualityValue = document.getElementById('quality-value');
-    qualitySlider.addEventListener('input', (e) => {
-      qualityValue.textContent = Math.round(e.target.value * 100) + '%';
+    const qualitySlider = document.getElementById("jpeg-quality");
+    const qualityValue = document.getElementById("quality-value");
+    qualitySlider.addEventListener("input", (e) => {
+      qualityValue.textContent = Math.round(e.target.value * 100) + "%";
     });
 
     // Visual effects controls
-    document.getElementById('enable-glow').addEventListener('change', (e) => {
+    document.getElementById("enable-glow").addEventListener("change", (e) => {
       this.renderer.effects.setGlow(e.target.checked);
       this.renderFractal();
     });
 
-    const glowIntensitySlider = document.getElementById('glow-intensity');
-    const glowIntensityValue = document.getElementById('glow-intensity-value');
-    glowIntensitySlider.addEventListener('input', (e) => {
+    const glowIntensitySlider = document.getElementById("glow-intensity");
+    const glowIntensityValue = document.getElementById("glow-intensity-value");
+    glowIntensitySlider.addEventListener("input", (e) => {
       const value = parseFloat(e.target.value);
       glowIntensityValue.textContent = value.toFixed(2);
       this.renderer.effects.setGlow(
-        document.getElementById('enable-glow').checked,
-        value
+        document.getElementById("enable-glow").checked,
+        value,
       );
       this.renderFractal();
     });
 
-    document.getElementById('enable-vignette').addEventListener('change', (e) => {
-      this.renderer.effects.setVignette(e.target.checked);
-      this.renderFractal();
-    });
+    document
+      .getElementById("enable-vignette")
+      .addEventListener("change", (e) => {
+        this.renderer.effects.setVignette(e.target.checked);
+        this.renderFractal();
+      });
 
-    const vignetteStrengthSlider = document.getElementById('vignette-strength');
-    const vignetteStrengthValue = document.getElementById('vignette-strength-value');
-    vignetteStrengthSlider.addEventListener('input', (e) => {
+    const vignetteStrengthSlider = document.getElementById("vignette-strength");
+    const vignetteStrengthValue = document.getElementById(
+      "vignette-strength-value",
+    );
+    vignetteStrengthSlider.addEventListener("input", (e) => {
       const value = parseFloat(e.target.value);
       vignetteStrengthValue.textContent = value.toFixed(2);
       this.renderer.effects.setVignette(
-        document.getElementById('enable-vignette').checked,
-        value
+        document.getElementById("enable-vignette").checked,
+        value,
       );
       this.renderFractal();
     });
 
-    document.getElementById('enable-grain').addEventListener('change', (e) => {
+    document.getElementById("enable-grain").addEventListener("change", (e) => {
       this.renderer.effects.setGrain(e.target.checked);
       this.renderFractal();
     });
 
-    const vibranceSlider = document.getElementById('color-vibrance');
-    const vibranceValue = document.getElementById('color-vibrance-value');
-    vibranceSlider.addEventListener('input', (e) => {
+    const vibranceSlider = document.getElementById("color-vibrance");
+    const vibranceValue = document.getElementById("color-vibrance-value");
+    vibranceSlider.addEventListener("input", (e) => {
       const value = parseFloat(e.target.value);
       vibranceValue.textContent = value.toFixed(1);
       this.renderer.effects.setColorEnhancement(
         value,
-        parseFloat(document.getElementById('color-saturation').value)
+        parseFloat(document.getElementById("color-saturation").value),
       );
       this.renderFractal();
     });
 
-    const saturationSlider = document.getElementById('color-saturation');
-    const saturationValue = document.getElementById('color-saturation-value');
-    saturationSlider.addEventListener('input', (e) => {
+    const saturationSlider = document.getElementById("color-saturation");
+    const saturationValue = document.getElementById("color-saturation-value");
+    saturationSlider.addEventListener("input", (e) => {
       const value = parseFloat(e.target.value);
       saturationValue.textContent = value.toFixed(1);
       this.renderer.effects.setColorEnhancement(
-        parseFloat(document.getElementById('color-vibrance').value),
-        value
+        parseFloat(document.getElementById("color-vibrance").value),
+        value,
       );
       this.renderFractal();
     });
 
     // Render button
-    document.getElementById('render-btn').addEventListener('click', () => {
+    document.getElementById("render-btn").addEventListener("click", () => {
       this.renderFractal();
     });
 
     // Export button
-    document.getElementById('export-btn').addEventListener('click', () => {
+    document.getElementById("export-btn").addEventListener("click", () => {
       this.exportFractal();
     });
   }
@@ -305,13 +373,13 @@ class FractalApp {
     let isDragging = false;
     let lastX, lastY;
 
-    this.canvas.addEventListener('mousedown', (e) => {
+    this.canvas.addEventListener("mousedown", (e) => {
       isDragging = true;
       lastX = e.clientX;
       lastY = e.clientY;
     });
 
-    this.canvas.addEventListener('mousemove', (e) => {
+    this.canvas.addEventListener("mousemove", (e) => {
       if (!isDragging) return;
 
       const dx = e.clientX - lastX;
@@ -327,16 +395,16 @@ class FractalApp {
       this.renderFractal();
     });
 
-    this.canvas.addEventListener('mouseup', () => {
+    this.canvas.addEventListener("mouseup", () => {
       isDragging = false;
     });
 
-    this.canvas.addEventListener('mouseleave', () => {
+    this.canvas.addEventListener("mouseleave", () => {
       isDragging = false;
     });
 
     // Zoom with scroll
-    this.canvas.addEventListener('wheel', (e) => {
+    this.canvas.addEventListener("wheel", (e) => {
       e.preventDefault();
 
       const zoomFactor = e.deltaY > 0 ? 1.1 : 0.9;
@@ -344,7 +412,7 @@ class FractalApp {
 
       // Update zoom level input
       const zoomLevel = 3.5 / this.renderer.range;
-      document.getElementById('zoom-level').value = zoomLevel.toFixed(2);
+      document.getElementById("zoom-level").value = zoomLevel.toFixed(2);
 
       this.renderFractal();
     });
@@ -354,7 +422,7 @@ class FractalApp {
     const configs = {
       mandelbrot: mandelbrotConfig,
       julia: juliaConfig,
-      'burning-ship': burningShipConfig,
+      "burning-ship": burningShipConfig,
       tricorn: tricornConfig,
       newton: newtonConfig,
     };
@@ -364,52 +432,84 @@ class FractalApp {
       this.renderer.setView(
         config.defaultView.centerX,
         config.defaultView.centerY,
-        config.defaultView.range
+        config.defaultView.range,
       );
     }
   }
 
+  hexToRgb(hex) {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result
+      ? {
+          r: parseInt(result[1], 16),
+          g: parseInt(result[2], 16),
+          b: parseInt(result[3], 16),
+        }
+      : { r: 0, g: 0, b: 0 };
+  }
+
   async renderFractal() {
-    const loading = document.getElementById('loading');
-    loading.style.display = 'block';
+    const loading = document.getElementById("loading");
+    loading.style.display = "block";
 
     await this.renderer.renderAsync(this.canvas.width, this.canvas.height);
 
-    loading.style.display = 'none';
+    loading.style.display = "none";
   }
 
   async exportFractal() {
-    const sizeSelect = document.getElementById('export-size').value;
-    const quality = parseFloat(document.getElementById('jpeg-quality').value);
+    const format = document.getElementById("export-format").value;
+    const sizeSelect = document.getElementById("export-size").value;
+    const quality = parseFloat(document.getElementById("jpeg-quality").value);
+    const transparentBackground = document.getElementById(
+      "transparent-background",
+    ).checked;
 
     let width, height;
 
-    if (sizeSelect === 'custom') {
-      width = parseInt(document.getElementById('custom-width').value);
-      height = parseInt(document.getElementById('custom-height').value);
+    if (sizeSelect === "custom") {
+      width = parseInt(document.getElementById("custom-width").value);
+      height = parseInt(document.getElementById("custom-height").value);
     } else {
-      [width, height] = sizeSelect.split('x').map(Number);
+      [width, height] = sizeSelect.split("x").map(Number);
     }
 
-    const loading = document.getElementById('loading');
-    loading.style.display = 'block';
-    loading.textContent = 'Exporting high-quality image...';
+    const loading = document.getElementById("loading");
+    loading.style.display = "block";
+    loading.textContent = "Exporting high-quality image...";
 
     try {
-      const filename = this.exporter.generateFilename();
-      await this.exporter.exportJPEG(width, height, quality, filename);
-      alert('Export successful! Check your downloads folder.');
+      const ext = format === "png" ? "png" : "jpg";
+      const filename = this.exporter.generateFilename(ext);
+
+      const progressCallback = (progress) => {
+        loading.textContent = `Exporting: ${progress.toFixed(1)}%`;
+      };
+
+      if (format === "png") {
+        await this.exporter.exportPNG(
+          width,
+          height,
+          transparentBackground,
+          filename,
+          progressCallback,
+        );
+      } else {
+        await this.exporter.exportJPEG(width, height, quality, filename);
+      }
+
+      alert("Export successful! Check your downloads folder.");
     } catch (error) {
-      console.error('Export failed:', error);
-      alert('Export failed. Please try again.');
+      console.error("Export failed:", error);
+      alert("Export failed. Please try again.");
     } finally {
-      loading.style.display = 'none';
-      loading.textContent = 'Rendering...';
+      loading.style.display = "none";
+      loading.textContent = "Rendering...";
     }
   }
 }
 
 // Initialize the app when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   new FractalApp();
 });
