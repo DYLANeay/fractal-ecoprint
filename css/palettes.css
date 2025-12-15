@@ -1,435 +1,548 @@
 /* Palette Preview Gradients */
 
 .sunset-preview {
-  background: linear-gradient(
-    90deg,
-    #1a1a2e 0%,
-    #16213e 20%,
-    #0f3460 40%,
-    #533483 60%,
-    #e94560 80%,
-    #ff6b6b 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #1a1a2e 0%,
+        #16213e 20%,
+        #0f3460 40%,
+        #533483 60%,
+        #e94560 80%,
+        #ff6b6b 100%
+    );
 }
 
 .ocean-preview {
-  background: linear-gradient(
-    90deg,
-    #000428 0%,
-    #004e92 20%,
-    #1e3c72 40%,
-    #2a5298 60%,
-    #74ebd5 80%,
-    #acb6e5 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #000428 0%,
+        #004e92 20%,
+        #1e3c72 40%,
+        #2a5298 60%,
+        #74ebd5 80%,
+        #acb6e5 100%
+    );
 }
 
 .forest-preview {
-  background: linear-gradient(
-    90deg,
-    #0a3d0c 0%,
-    #1e5f1f 20%,
-    #2d8630 40%,
-    #5cb85c 60%,
-    #8bc34a 80%,
-    #cddc39 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #0a3d0c 0%,
+        #1e5f1f 20%,
+        #2d8630 40%,
+        #5cb85c 60%,
+        #8bc34a 80%,
+        #cddc39 100%
+    );
 }
 
 .fire-preview {
-  background: linear-gradient(
-    90deg,
-    #000000 0%,
-    #3d0000 20%,
-    #8b0000 40%,
-    #ff4500 60%,
-    #ffa500 80%,
-    #ffff00 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #000000 0%,
+        #3d0000 20%,
+        #8b0000 40%,
+        #ff4500 60%,
+        #ffa500 80%,
+        #ffff00 100%
+    );
 }
 
 .rainbow-preview {
-  background: linear-gradient(
-    90deg,
-    #ff0000 0%,
-    #ff7f00 16.67%,
-    #ffff00 33.33%,
-    #00ff00 50%,
-    #0000ff 66.67%,
-    #4b0082 83.33%,
-    #9400d3 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #ff0000 0%,
+        #ff7f00 16.67%,
+        #ffff00 33.33%,
+        #00ff00 50%,
+        #0000ff 66.67%,
+        #4b0082 83.33%,
+        #9400d3 100%
+    );
 }
 
 .grayscale-preview {
-  background: linear-gradient(
-    90deg,
-    #000000 0%,
-    #1a1a1a 20%,
-    #4d4d4d 40%,
-    #808080 60%,
-    #b3b3b3 80%,
-    #ffffff 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #000000 0%,
+        #1a1a1a 20%,
+        #4d4d4d 40%,
+        #808080 60%,
+        #b3b3b3 80%,
+        #ffffff 100%
+    );
 }
 
 .aurora-preview {
-  background: linear-gradient(
-    90deg,
-    #001428 0%,
-    #006464 20%,
-    #00c896 40%,
-    #64ffc8 60%,
-    #9664ff 80%,
-    #ff3296 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #001428 0%,
+        #006464 20%,
+        #00c896 40%,
+        #64ffc8 60%,
+        #9664ff 80%,
+        #ff3296 100%
+    );
 }
 
 .neon-preview {
-  background: linear-gradient(
-    90deg,
-    #0a0a0a 0%,
-    #ff00ff 20%,
-    #00ffff 40%,
-    #ffff00 60%,
-    #00ff00 80%,
-    #ff0000 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #0a0a0a 0%,
+        #ff00ff 20%,
+        #00ffff 40%,
+        #ffff00 60%,
+        #00ff00 80%,
+        #ff0000 100%
+    );
 }
 
 .vintage-preview {
-  background: linear-gradient(
-    90deg,
-    #2c190e 0%,
-    #654321 20%,
-    #987654 40%,
-    #cdad7a 60%,
-    #edd6b0 80%,
-    #fff5e1 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #2c190e 0%,
+        #654321 20%,
+        #987654 40%,
+        #cdad7a 60%,
+        #edd6b0 80%,
+        #fff5e1 100%
+    );
 }
 
 .cyberpunk-preview {
-  background: linear-gradient(
-    90deg,
-    #000000 0%,
-    #8a00b8 20%,
-    #ff007f 40%,
-    #00ffff 60%,
-    #ffd700 80%,
-    #ffffff 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #000000 0%,
+        #8a00b8 20%,
+        #ff007f 40%,
+        #00ffff 60%,
+        #ffd700 80%,
+        #ffffff 100%
+    );
 }
 
 .lava-preview {
-  background: linear-gradient(
-    90deg,
-    #000000 0%,
-    #800000 20%,
-    #ff4500 40%,
-    #ff8c00 60%,
-    #ffd700 80%,
-    #ffffc8 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #000000 0%,
+        #800000 20%,
+        #ff4500 40%,
+        #ff8c00 60%,
+        #ffd700 80%,
+        #ffffc8 100%
+    );
 }
 
 .ice-preview {
-  background: linear-gradient(
-    90deg,
-    #000014 0%,
-    #142850 20%,
-    #326496 40%,
-    #64b4dc 60%,
-    #b4e6ff 80%,
-    #f0faff 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #000014 0%,
+        #142850 20%,
+        #326496 40%,
+        #64b4dc 60%,
+        #b4e6ff 80%,
+        #f0faff 100%
+    );
 }
 
 .toxic-preview {
-  background: linear-gradient(
-    90deg,
-    #000000 0%,
-    #143200 20%,
-    #326400 40%,
-    #64c800 60%,
-    #96ff00 80%,
-    #c8ff64 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #000000 0%,
+        #143200 20%,
+        #326400 40%,
+        #64c800 60%,
+        #96ff00 80%,
+        #c8ff64 100%
+    );
 }
 
 .sakura-preview {
-  background: linear-gradient(
-    90deg,
-    #321428 0%,
-    #783c5a 20%,
-    #c87896 40%,
-    #ffb4c8 60%,
-    #ffdce6 80%,
-    #fff0f5 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #321428 0%,
+        #783c5a 20%,
+        #c87896 40%,
+        #ffb4c8 60%,
+        #ffdce6 80%,
+        #fff0f5 100%
+    );
 }
 
 .deepspace-preview {
-  background: linear-gradient(
-    90deg,
-    #00000a 0%,
-    #140028 20%,
-    #3c1464 40%,
-    #643296 60%,
-    #9664c8 80%,
-    #c896ff 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #00000a 0%,
+        #140028 20%,
+        #3c1464 40%,
+        #643296 60%,
+        #9664c8 80%,
+        #c896ff 100%
+    );
 }
 
 .copper-preview {
-  background: linear-gradient(
-    90deg,
-    #140a00 0%,
-    #502814 20%,
-    #965a32 40%,
-    #c88250 60%,
-    #e6aa78 80%,
-    #ffc896 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #140a00 0%,
+        #502814 20%,
+        #965a32 40%,
+        #c88250 60%,
+        #e6aa78 80%,
+        #ffc896 100%
+    );
 }
 
 .tropical-preview {
-  background: linear-gradient(
-    90deg,
-    #00283c 0%,
-    #00788c 20%,
-    #ffb400 40%,
-    #ff6464 60%,
-    #c83296 80%,
-    #ffdc64 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #00283c 0%,
+        #00788c 20%,
+        #ffb400 40%,
+        #ff6464 60%,
+        #c83296 80%,
+        #ffdc64 100%
+    );
 }
 
 .midnight-preview {
-  background: linear-gradient(
-    90deg,
-    #0a0a1e 0%,
-    #14143c 20%,
-    #283264 40%,
-    #505a8c 60%,
-    #7882b4 80%,
-    #b4bee6 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #0a0a1e 0%,
+        #14143c 20%,
+        #283264 40%,
+        #505a8c 60%,
+        #7882b4 80%,
+        #b4bee6 100%
+    );
 }
 
 .desert-preview {
-  background: linear-gradient(
-    90deg,
-    #3c2814 0%,
-    #785028 20%,
-    #b4783c 40%,
-    #dca064 60%,
-    #f0c88c 80%,
-    #ffe6b4 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #3c2814 0%,
+        #785028 20%,
+        #b4783c 40%,
+        #dca064 60%,
+        #f0c88c 80%,
+        #ffe6b4 100%
+    );
 }
 
 .candy-preview {
-  background: linear-gradient(
-    90deg,
-    #640064 0%,
-    #c80096 20%,
-    #ff64c8 40%,
-    #ff96ff 60%,
-    #c8c8ff 80%,
-    #ffffff 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #640064 0%,
+        #c80096 20%,
+        #ff64c8 40%,
+        #ff96ff 60%,
+        #c8c8ff 80%,
+        #ffffff 100%
+    );
 }
 
 .earth-preview {
-  background: linear-gradient(
-    90deg,
-    #28321e 0%,
-    #505a32 20%,
-    #788250 40%,
-    #a09664 60%,
-    #c8b48c 80%,
-    #e6d2b4 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #28321e 0%,
+        #505a32 20%,
+        #788250 40%,
+        #a09664 60%,
+        #c8b48c 80%,
+        #e6d2b4 100%
+    );
 }
 
 .plasma-preview {
-  background: linear-gradient(
-    90deg,
-    #0d0887 0%,
-    #5402a3 20%,
-    #8b0aa5 40%,
-    #b93289 60%,
-    #db5c68 80%,
-    #f48c42 100%,
-    #fddb27 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #0d0887 0%,
+        #5402a3 20%,
+        #8b0aa5 40%,
+        #b93289 60%,
+        #db5c68 80%,
+        #f48c42 100%,
+        #fddb27 100%
+    );
 }
 
 .viridis-preview {
-  background: linear-gradient(
-    90deg,
-    #440154 0%,
-    #3b528b 25%,
-    #21918c 50%,
-    #5ec962 75%,
-    #fde725 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #440154 0%,
+        #3b528b 25%,
+        #21918c 50%,
+        #5ec962 75%,
+        #fde725 100%
+    );
 }
 
 /* Premium Palette Previews for Yearbook Cover */
 .golden-preview {
-  background: linear-gradient(
-    90deg,
-    #0a0500 0%,
-    #281400 20%,
-    #643c0a 40%,
-    #b4821e 60%,
-    #ffc832 70%,
-    #fff096 85%,
-    #ffffdc 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #0a0500 0%,
+        #281400 20%,
+        #643c0a 40%,
+        #b4821e 60%,
+        #ffc832 70%,
+        #fff096 85%,
+        #ffffdc 100%
+    );
 }
 
 .silver-preview {
-  background: linear-gradient(
-    90deg,
-    #00000a 0%,
-    #1e232d 20%,
-    #50555f 40%,
-    #8c919b 60%,
-    #c8cdd7 80%,
-    #f0f2f5 90%,
-    #ffffff 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #00000a 0%,
+        #1e232d 20%,
+        #50555f 40%,
+        #8c919b 60%,
+        #c8cdd7 80%,
+        #f0f2f5 90%,
+        #ffffff 100%
+    );
 }
 
 .royal-preview {
-  background: linear-gradient(
-    90deg,
-    #0a001e 0%,
-    #280a50 20%,
-    #502896 40%,
-    #9664c8 60%,
-    #c896ff 70%,
-    #ffc864 85%,
-    #ffffc8 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #0a001e 0%,
+        #280a50 20%,
+        #502896 40%,
+        #9664c8 60%,
+        #c896ff 70%,
+        #ffc864 85%,
+        #ffffc8 100%
+    );
 }
 
 .emerald-preview {
-  background: linear-gradient(
-    90deg,
-    #000a05 0%,
-    #002814 20%,
-    #0a643c 40%,
-    #1ea064 60%,
-    #50dc96 70%,
-    #96ffc8 85%,
-    #dcfff0 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #000a05 0%,
+        #002814 20%,
+        #0a643c 40%,
+        #1ea064 60%,
+        #50dc96 70%,
+        #96ffc8 85%,
+        #dcfff0 100%
+    );
 }
 
 .ruby-preview {
-  background: linear-gradient(
-    90deg,
-    #140005 0%,
-    #500014 20%,
-    #960a28 40%,
-    #dc1e3c 60%,
-    #ff5064 70%,
-    #ff9696 85%,
-    #ffdcdc 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #140005 0%,
+        #500014 20%,
+        #960a28 40%,
+        #dc1e3c 60%,
+        #ff5064 70%,
+        #ff9696 85%,
+        #ffdcdc 100%
+    );
 }
 
 .sapphire-preview {
-  background: linear-gradient(
-    90deg,
-    #000514 0%,
-    #0a1e50 20%,
-    #143c96 40%,
-    #2864dc 60%,
-    #64a0ff 70%,
-    #b4dcff 85%,
-    #e6f5ff 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #000514 0%,
+        #0a1e50 20%,
+        #143c96 40%,
+        #2864dc 60%,
+        #64a0ff 70%,
+        #b4dcff 85%,
+        #e6f5ff 100%
+    );
 }
 
 .sunset-glow-preview {
-  background: linear-gradient(
-    90deg,
-    #050014 0%,
-    #320a3c 20%,
-    #781450 40%,
-    #c83246 60%,
-    #ff7850 70%,
-    #ffb464 85%,
-    #ffe696 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #050014 0%,
+        #320a3c 20%,
+        #781450 40%,
+        #c83246 60%,
+        #ff7850 70%,
+        #ffb464 85%,
+        #ffe696 100%
+    );
 }
 
 .northern-lights-preview {
-  background: linear-gradient(
-    90deg,
-    #000a1e 0%,
-    #0a3c64 20%,
-    #288c78 40%,
-    #50c8a0 60%,
-    #8cb4ff 70%,
-    #b478ff 85%,
-    #ff8cc8 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #000a1e 0%,
+        #0a3c64 20%,
+        #288c78 40%,
+        #50c8a0 60%,
+        #8cb4ff 70%,
+        #b478ff 85%,
+        #ff8cc8 100%
+    );
 }
 
 .magma-preview {
-  background: linear-gradient(
-    90deg,
-    #000004 0%,
-    #280b54 20%,
-    #65156e 40%,
-    #9f2a63 60%,
-    #d44842 70%,
-    #f57d15 85%,
-    #fcfdbf 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #000004 0%,
+        #280b54 20%,
+        #65156e 40%,
+        #9f2a63 60%,
+        #d44842 70%,
+        #f57d15 85%,
+        #fcfdbf 100%
+    );
 }
 
 .ocean-depth-preview {
-  background: linear-gradient(
-    90deg,
-    #000000 0%,
-    #001428 20%,
-    #003c64 40%,
-    #14648c 60%,
-    #3ca0b4 70%,
-    #78dcf0 85%,
-    #c8faff 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #000000 0%,
+        #001428 20%,
+        #003c64 40%,
+        #14648c 60%,
+        #3ca0b4 70%,
+        #78dcf0 85%,
+        #c8faff 100%
+    );
 }
 
 .cosmic-preview {
-  background: linear-gradient(
-    90deg,
-    #000005 0%,
-    #140528 20%,
-    #3c1464 40%,
-    #8c28b4 60%,
-    #c850f0 70%,
-    #ff8cc8 85%,
-    #ffdcff 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #000005 0%,
+        #140528 20%,
+        #3c1464 40%,
+        #8c28b4 60%,
+        #c850f0 70%,
+        #ff8cc8 85%,
+        #ffdcff 100%
+    );
 }
 
 .professional-preview {
-  background: linear-gradient(
-    90deg,
-    #0a0f14 0%,
-    #1e3246 20%,
-    #3c5a78 40%,
-    #648cb4 60%,
-    #96bedc 70%,
-    #c8dcf0 85%,
-    #f0f5fa 100%
-  );
+    background: linear-gradient(
+        90deg,
+        #0a0f14 0%,
+        #1e3246 20%,
+        #3c5a78 40%,
+        #648cb4 60%,
+        #96bedc 70%,
+        #c8dcf0 85%,
+        #f0f5fa 100%
+    );
+}
+
+/* Red-Orange-Yellow Palette Previews */
+.inferno-preview {
+    background: linear-gradient(
+        90deg,
+        #000000 0%,
+        #28000a 15%,
+        #640a14 30%,
+        #aa1e0a 45%,
+        #dc4600 60%,
+        #ff8200 75%,
+        #ffc832 90%,
+        #ffff96 100%
+    );
+}
+
+.autumn-preview {
+    background: linear-gradient(
+        90deg,
+        #1e0a00 0%,
+        #501405 15%,
+        #8c280a 30%,
+        #b4460f 45%,
+        #d26e14 60%,
+        #f0a028 75%,
+        #ffc850 90%,
+        #ffeb96 100%
+    );
+}
+
+.ember-preview {
+    background: linear-gradient(
+        90deg,
+        #0a0000 0%,
+        #3c0505 15%,
+        #78140a 30%,
+        #b4320a 45%,
+        #dc5a0a 60%,
+        #fa8c14 75%,
+        #ffbe3c 90%,
+        #ffe678 100%
+    );
+}
+
+.solar-flare-preview {
+    background: linear-gradient(
+        90deg,
+        #14000a 0%,
+        #500014 15%,
+        #96141e 30%,
+        #c83214 45%,
+        #f0640a 60%,
+        #ffa01e 75%,
+        #ffd250 90%,
+        #fff5b4 100%
+    );
+}
+
+.molten-preview {
+    background: linear-gradient(
+        90deg,
+        #000000 0%,
+        #320000 15%,
+        #780a00 30%,
+        #b42800 45%,
+        #e65000 60%,
+        #ff8c00 75%,
+        #ffc832 90%,
+        #fff096 100%
+    );
+}
+
+.phoenix-preview {
+    background: linear-gradient(
+        90deg,
+        #0f0514 0%,
+        #3c0a1e 15%,
+        #821428 30%,
+        #be281e 45%,
+        #e65014 60%,
+        #ff821e 75%,
+        #ffb43c 90%,
+        #ffdc78 100%
+    );
+}
+
+.heat-wave-preview {
+    background: linear-gradient(
+        90deg,
+        #140a1e 0%,
+        #460f28 15%,
+        #8c1932 30%,
+        #c82d28 45%,
+        #f05a1e 60%,
+        #ff9628 75%,
+        #ffc850 90%,
+        #fff0a0 100%
+    );
+}
+
+.campfire-preview {
+    background: linear-gradient(
+        90deg,
+        #0a0500 0%,
+        #280f05 15%,
+        #5a1e0a 30%,
+        #96320f 45%,
+        #c85514 60%,
+        #f0821e 75%,
+        #ffb43c 90%,
+        #ffdc78 100%
+    );
 }

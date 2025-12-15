@@ -82,9 +82,10 @@ export class FractalExporter {
     const imageData = this.renderer.ctx.createImageData(width, height);
     const data = imageData.data;
 
-    // Track which pixels should be transparent (background/outside the fractal)
-    const alphaData = transparentBackground
-      ? new Uint8Array(width * height)
+    // Track alpha based on color brightness for transparent export
+    // We'll compute this after effects are applied for glow-aware transparency
+    const iterationData = transparentBackground
+      ? new Float32Array(width * height)
       : null;
 
     for (let chunk = 0; chunk < totalChunks; chunk++) {
@@ -97,7 +98,7 @@ export class FractalExporter {
           for (let py = startY; py < endY; py++) {
             for (let px = 0; px < width; px++) {
               let color;
-              let isInsideSet = false;
+              let iteration = 0;
 
               if (
                 this.renderer.antialiasing &&
@@ -106,7 +107,7 @@ export class FractalExporter {
                 // Supersampling for anti-aliasing
                 const VisualEffects = this.renderer.effects.constructor;
 
-                // For transparency, we need to check the center point
+                // Get center point iteration for transparency tracking
                 if (transparentBackground) {
                   const { x: cx, y: cy } = this.renderer.pixelToComplex(
                     px,
@@ -114,8 +115,8 @@ export class FractalExporter {
                     width,
                     height,
                   );
-                  const { iteration } = this.renderer.calculatePoint(cx, cy);
-                  isInsideSet = iteration >= this.renderer.maxIterations;
+                  const result = this.renderer.calculatePoint(cx, cy);
+                  iteration = result.iteration;
                 }
 
                 color = VisualEffects.supersample(
@@ -148,15 +149,12 @@ export class FractalExporter {
                   width,
                   height,
                 );
-                const { iteration, smoothValue } = this.renderer.calculatePoint(
-                  cx,
-                  cy,
-                );
-                isInsideSet = iteration >= this.renderer.maxIterations;
+                const result = this.renderer.calculatePoint(cx, cy);
+                iteration = result.iteration;
                 color = this.renderer.colorPalette.getSmoothColor(
-                  iteration,
+                  result.iteration,
                   this.renderer.maxIterations,
-                  smoothValue,
+                  result.smoothValue,
                 );
               }
 
@@ -166,12 +164,9 @@ export class FractalExporter {
               data[index + 2] = color.b;
               data[index + 3] = 255; // Set opaque initially
 
-              // Track transparency: the fractal SET (inside, black) should be OPAQUE
-              // The background (outside, colored) should be TRANSPARENT for PNG
+              // Store iteration for transparency calculation
               if (transparentBackground) {
-                // isInsideSet = true means we're inside the fractal (the black part)
-                // We want to keep the fractal visible, make background transparent
-                alphaData[py * width + px] = isInsideSet ? 255 : 0;
+                iterationData[py * width + px] = iteration;
               }
             }
           }
@@ -181,7 +176,7 @@ export class FractalExporter {
 
       // Report progress
       if (progressCallback) {
-        const progress = ((chunk + 1) / totalChunks) * 100;
+        const progress = ((chunk + 1) / totalChunks) * 80; // 80% for rendering
         progressCallback(progress);
       }
 
@@ -189,22 +184,90 @@ export class FractalExporter {
       await new Promise((resolve) => setTimeout(resolve, 0));
     }
 
-    // Apply post-processing effects (this may modify colors but we preserve alpha separately)
-    this.renderer.effects.applyEffects(
-      imageData,
-      width,
-      height,
-      transparentBackground,
-    );
+    // Apply post-processing effects (glow, vignette, etc.)
+    this.renderer.effects.applyEffects(imageData, width, height, false);
 
-    // Apply transparency after effects if needed
-    if (transparentBackground && alphaData) {
-      for (let i = 0; i < alphaData.length; i++) {
-        data[i * 4 + 3] = alphaData[i];
-      }
+    if (progressCallback) {
+      progressCallback(90);
+    }
+
+    // Apply transparency after effects - this way glow bleeds into transparent areas nicely
+    if (transparentBackground) {
+      this.applyTransparencyWithGlow(data, iterationData, width, height);
+    }
+
+    if (progressCallback) {
+      progressCallback(100);
     }
 
     this.renderer.ctx.putImageData(imageData, 0, 0);
+  }
+
+  // Apply transparency based on pixel brightness, preserving glow effect
+  applyTransparencyWithGlow(data, iterationData, width, height) {
+    const maxIter = this.renderer.maxIterations;
+
+    for (let i = 0; i < iterationData.length; i++) {
+      const idx = i * 4;
+      const r = data[idx];
+      const g = data[idx + 1];
+      const b = data[idx + 2];
+
+      // Calculate pixel brightness (luminance)
+      const brightness = (r * 0.299 + g * 0.587 + b * 0.114) / 255;
+
+      // Check if this pixel is inside the set (would be black without glow)
+      const isInsideSet = iterationData[i] >= maxIter;
+
+      if (isInsideSet) {
+        // Inside the set - use brightness to determine alpha
+        // This allows glow from nearby colored pixels to show
+        // but pure black areas become transparent
+        const alpha = Math.min(255, Math.round(brightness * 255 * 3));
+        data[idx + 3] = alpha;
+      } else {
+        // Outside the set - keep opaque (this is the colorful fractal)
+        data[idx + 3] = 255;
+      }
+    }
+
+    // Optional: Smooth the alpha channel edges for better blending
+    this.smoothAlphaEdges(data, width, height);
+  }
+
+  // Smooth alpha channel edges for cleaner transparency
+  smoothAlphaEdges(data, width, height) {
+    const alphaBuffer = new Uint8Array(width * height);
+
+    // Extract alpha channel
+    for (let i = 0; i < width * height; i++) {
+      alphaBuffer[i] = data[i * 4 + 3];
+    }
+
+    // Apply a small blur to alpha edges only
+    const radius = 1;
+    for (let y = radius; y < height - radius; y++) {
+      for (let x = radius; x < width - radius; x++) {
+        const idx = y * width + x;
+        const currentAlpha = alphaBuffer[idx];
+
+        // Only smooth edge pixels (not fully opaque or fully transparent)
+        if (currentAlpha > 0 && currentAlpha < 255) {
+          let sum = 0;
+          let count = 0;
+
+          for (let dy = -radius; dy <= radius; dy++) {
+            for (let dx = -radius; dx <= radius; dx++) {
+              const nidx = (y + dy) * width + (x + dx);
+              sum += alphaBuffer[nidx];
+              count++;
+            }
+          }
+
+          data[idx * 4 + 3] = Math.round(sum / count);
+        }
+      }
+    }
   }
 
   async exportJPEG(width, height, quality = 0.95, filename = null) {
