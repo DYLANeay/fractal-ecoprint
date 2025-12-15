@@ -203,40 +203,106 @@ export class FractalExporter {
     this.renderer.ctx.putImageData(imageData, 0, 0);
   }
 
-  // Apply transparency based on pixel brightness, preserving glow effect
+  // Apply transparency: keep fractal boundary + glow, remove outer background
   applyTransparencyWithGlow(data, iterationData, width, height) {
     const maxIter = this.renderer.maxIterations;
+    const glowRadius = this.renderer.effects.settings.glowRadius || 3;
+    const hasGlow = this.renderer.effects.settings.glow;
 
+    // First pass: create a mask of "interesting" pixels (fractal boundary region)
+    // The fractal boundary is where iterations are NOT at max (inside set)
+    // and NOT escaping very quickly (far from the fractal)
+    const mask = new Float32Array(width * height);
+
+    // Find the iteration threshold - pixels that escape quickly are "background"
+    // We want to keep pixels near the fractal boundary
+    for (let i = 0; i < iterationData.length; i++) {
+      const iteration = iterationData[i];
+
+      if (iteration >= maxIter) {
+        // Inside the set (black area) - this IS the fractal, keep it
+        mask[i] = 1.0;
+      } else {
+        // Outside the set - use iteration count to determine if near boundary
+        // Low iterations = escaped quickly = far from fractal = background
+        // Higher iterations (but not max) = near boundary = keep
+        const normalizedIter = iteration / maxIter;
+        // Keep pixels that took longer to escape (they're near the boundary)
+        // Fade out pixels that escaped quickly
+        mask[i] = Math.min(1.0, normalizedIter * 3.0);
+      }
+    }
+
+    // Second pass: expand the mask to include glow area
+    // This ensures glow from the fractal bleeds outward properly
+    if (hasGlow) {
+      const expandedMask = new Float32Array(mask);
+      const expandRadius = Math.max(glowRadius * 2, 5);
+
+      for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+          const idx = y * width + x;
+          if (mask[idx] < 0.5) {
+            // Check if any nearby pixel is part of the fractal
+            let maxNearby = 0;
+            for (let dy = -expandRadius; dy <= expandRadius; dy++) {
+              for (let dx = -expandRadius; dx <= expandRadius; dx++) {
+                const ny = y + dy;
+                const nx = x + dx;
+                if (ny >= 0 && ny < height && nx >= 0 && nx < width) {
+                  const nidx = ny * width + nx;
+                  if (mask[nidx] > maxNearby) {
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    const falloff = Math.max(0, 1 - dist / expandRadius);
+                    maxNearby = Math.max(maxNearby, mask[nidx] * falloff);
+                  }
+                }
+              }
+            }
+            expandedMask[idx] = Math.max(mask[idx], maxNearby);
+          }
+        }
+      }
+
+      // Use expanded mask
+      for (let i = 0; i < mask.length; i++) {
+        mask[i] = expandedMask[i];
+      }
+    }
+
+    // Third pass: apply alpha based on mask and pixel brightness
     for (let i = 0; i < iterationData.length; i++) {
       const idx = i * 4;
       const r = data[idx];
       const g = data[idx + 1];
       const b = data[idx + 2];
 
-      // Calculate pixel brightness (luminance)
+      // Calculate pixel brightness
       const brightness = (r * 0.299 + g * 0.587 + b * 0.114) / 255;
 
-      // Check if this pixel is inside the set (would be black without glow)
-      const isInsideSet = iterationData[i] >= maxIter;
+      // Combine mask with brightness for final alpha
+      // This ensures glowing areas (bright pixels near fractal) stay visible
+      let alpha = mask[i];
 
-      if (isInsideSet) {
-        // Inside the set - use brightness to determine alpha
-        // This allows glow from nearby colored pixels to show
-        // but pure black areas become transparent
-        const alpha = Math.min(255, Math.round(brightness * 255 * 3));
-        data[idx + 3] = alpha;
-      } else {
-        // Outside the set - keep opaque (this is the colorful fractal)
-        data[idx + 3] = 255;
+      // Boost alpha for bright pixels (glow effect)
+      if (brightness > 0.1) {
+        alpha = Math.max(alpha, brightness * mask[i] * 2);
       }
+
+      // For pixels inside the set, use brightness to show glow bleeding in
+      if (iterationData[i] >= maxIter) {
+        alpha = Math.max(alpha, brightness * 2);
+      }
+
+      data[idx + 3] = Math.min(255, Math.round(alpha * 255));
     }
 
-    // Optional: Smooth the alpha channel edges for better blending
-    this.smoothAlphaEdges(data, width, height);
+    // Smooth the alpha edges
+    this.smoothAlphaEdges(data, width, height, 2);
   }
 
   // Smooth alpha channel edges for cleaner transparency
-  smoothAlphaEdges(data, width, height) {
+  smoothAlphaEdges(data, width, height, radius = 1) {
     const alphaBuffer = new Uint8Array(width * height);
 
     // Extract alpha channel
@@ -244,15 +310,14 @@ export class FractalExporter {
       alphaBuffer[i] = data[i * 4 + 3];
     }
 
-    // Apply a small blur to alpha edges only
-    const radius = 1;
+    // Apply blur to alpha channel for smooth edges
     for (let y = radius; y < height - radius; y++) {
       for (let x = radius; x < width - radius; x++) {
         const idx = y * width + x;
         const currentAlpha = alphaBuffer[idx];
 
-        // Only smooth edge pixels (not fully opaque or fully transparent)
-        if (currentAlpha > 0 && currentAlpha < 255) {
+        // Smooth all edge pixels for better blending
+        if (currentAlpha > 5 && currentAlpha < 250) {
           let sum = 0;
           let count = 0;
 
